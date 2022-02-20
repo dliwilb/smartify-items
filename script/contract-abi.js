@@ -1,6 +1,6 @@
-const contractAddress = '0x82bb2033ff3511a5e4A9dc2d92bcc7eB5E89433e';
+const smartifyContractAddress = '0x82bb2033ff3511a5e4A9dc2d92bcc7eB5E89433e';
 
-const contractABI = [
+const smartifyContractABI = [
 	{
 		"inputs": [],
 		"stateMutability": "nonpayable",

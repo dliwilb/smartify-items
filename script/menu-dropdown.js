@@ -1,3 +1,6 @@
+// &nbsp;&#9776;&nbsp;
+// <img src="./smartify_100_100_trans.png"></img>
+
 document.getElementById('div-menu-dropdown').innerHTML = 
 `
 <div class="dropdown" style="display:inline; vertical-align:super;">

@@ -11,50 +11,77 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@700&display=swap" rel="stylesheet">
-<link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+
+<link rel="icon" type="image/png" sizes="32x32" href="./smartify_32_32_trans.png">
 </head>
 <body>
     
 <!-- Header >> -->
-<h1 id="h1-title" style="display: none">Mint</h1>
+<h1 id="h1-title" style="display: none">Mint <img src="smartify_color_bch_3_bg111111_100_100.png" style="width: 42px"></h1>
 <div id="div-menu-dropdown"></div>
 <script src="script/menu-dropdown.js"></script>
-<script src="script/common-layout.js"></script>
 <!-- << Header -->
 
-<!-- Introduction -->
-<div class="div-step">
-    <!-- <p class="line-bold">Non-Fungible Token&nbsp;&nbsp;<span title="ERC721 on smartBCH" class="question-mark" onclick="showDiv('erc721-info')">&nbsp;?&nbsp;</span></p> -->
-    <span class="line">&nbsp;</span>
 
-    <div id="erc721-info" class="info">
-        There are two common NFT implemention standards on an Ethereum Virtual Machine (EVM), <a href="https://ethereum.org/en/developers/docs/standards/tokens/erc-721/">ERC-721</a> and <a href="https://ethereum.org/en/developers/docs/standards/tokens/erc-1155/">ERC-1155</a>. NFTs minted here adhere to the ERC-721 standard using the <a href="https://smartbch.org/">smartBCH</a> blockchain under contract address <a href="">TBA</a>.
+
+<!-- Input >> -->
+<div id="div-input">
+    <div class="div-step">
+        <!-- <p class="line-bold">Non-Fungible Token&nbsp;&nbsp;<span title="ERC721 on smartBCH" class="question-mark" onclick="showDiv('erc721-info')">&nbsp;?&nbsp;</span></p> -->
+        <span class="line">&nbsp;</span>
+        <div id="erc721-info" class="info">
+            There are two common NFT implemention standards on an Ethereum Virtual Machine (EVM), <a href="https://ethereum.org/en/developers/docs/standards/tokens/erc-721/">ERC-721</a> and <a href="https://ethereum.org/en/developers/docs/standards/tokens/erc-1155/">ERC-1155</a>. NFTs minted here adhere to the ERC-721 standard using the <a href="https://smartbch.org/">smartBCH</a> blockchain under contract address <a href="">TBA</a>.
+        </div>
+
+        <!-- File -->
+        <p class="line"><button id="button-for-file" class="file-selector">Select File to Smartify</button></p>
+        <p class="line"><input type="file" id="file-to-smartify" name="file-to-smartify" onchange="updateFile()" style="display: none" />&nbsp;</p>
+        
+        <!--  Title -->
+        <p class="line"><input type="text" id="nft-name" size="12" placeholder="Title" /></p>
+
+        <!-- Description -->
+        <div class="div-textarea"><textarea id="nft-description" cols="" rows="8" style="resize: vertical;" placeholder="Description"></textarea></div>
+
+        <!-- Hashtags -->
+        <p class="line"><input type="text" id="nft-hashtags" style="width: 680px" placeholder="#smartBCH, #noise, #ptt..." /></p>
+
+        <!-- Number of Editions -->
+        <p class="line">
+            <input type="number" id="nft-editions" min="1" style="width: 170px" placeholder="No. of Editions" />
+            <input type="number" id="nft-royalties" min="0" max="25" style="width: 170px" placeholder="Royalties (&leq; 25 %)" />
+        </p>
+
+        <!-- Recipient -->
+        <p class="line"><input type="text" id="nft-recipient" style="width: 500px" placeholder="0x... (Mints to yourself if not specified)" /></p>
     </div>
 
-    <p class="line"><button id="button-for-file" class="file-selector">Select File to Smartify</button></p>
-    <p class="line"><input type="file" id="file-to-pin" name="file-to-pin" onchange="updateFile()" style="display: none" />&nbsp;</p>
-    
-    <p class="line"><input type="text" id="nft-name" size="12" placeholder="Name" /></p>
+    <div class="div-step">
+        <!-- <p class="line-bold">Pinata API keys&nbsp;&nbsp;<span title="What is this and why is it needed?" class="question-mark" onclick="showDiv('pinata-info')">&nbsp;?&nbsp;</span></p> -->
+        
+        <div id="pinata-info" class="info">
+            The file selected will be uploaded to the <a href="https://ipfs.io/">InterPlanatery File System (IPFS)</a> via <a href="https://medium.com/pinata/how-to-pin-to-ipfs-effortlessly-ba3437b33885">Pinata's API</a>, as well as a <a href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON">JSON file></a> that contains information about the NFT using the <a href="https://eips.ethereum.org/EIPS/eip-721">ERC721 Metadata JSON Schema</a>. <br>
+            By using your own API keys you are in full control of the <a href="https://docs.ipfs.io/concepts/persistence/">pinning status</a> of your non-fungible tokenized work. You are responsible for the file you upload and tokenize.
+        </div>
 
-    <div class="div-textarea"><textarea cols="" rows="8" style="resize: vertical;" placeholder="Description"></textarea></div>
-    <p class="line"><input type="number" id="nft-editions" min="1" style="width: 90px" placeholder="Editions" /></p>
-</div>
-
-<div class="div-step">
-    <!-- <p class="line-bold">Pinata API keys&nbsp;&nbsp;<span title="What is this and why is it needed?" class="question-mark" onclick="showDiv('pinata-info')">&nbsp;?&nbsp;</span></p> -->
-    
-    <div id="pinata-info" class="info">
-        The file selected will be uploaded to the <a href="https://ipfs.io/">InterPlanatery File System (IPFS)</a> via <a href="https://medium.com/pinata/how-to-pin-to-ipfs-effortlessly-ba3437b33885">Pinata's API</a>, as well as a <a href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON">JSON file></a> that contains information about the NFT using the <a href="https://eips.ethereum.org/EIPS/eip-721">ERC721 Metadata JSON Schema</a>. <br>
-        By using your own API keys you are in full control of the <a href="https://docs.ipfs.io/concepts/persistence/">pinning status</a> of your non-fungible tokenized work. You are responsible for the file you upload and tokenize.
+        <input type="text" id="api-key" placeholder="Pinata API Key" value="" style="width: 330px" />&nbsp;<button class="file-selector" onclick="savePinataKeys()">Store keys locally as cookies for 30 days</button><br>
+        <input type="text" id="secret-api-key" placeholder="Pinata Secret API Key" value="" style="width: 680px;" /><br>
     </div>
+</div>
+<!-- << Input -->
 
-    <input type="text" id="api-key" placeholder="Pinata API Key" value="" style="width: 330px" />&nbsp;<button class="file-selector" onclick="savePinataKeys()">Store keys locally as cookies for 30 days</button><br>
-    <input type="text" id="secret-api-key" placeholder="Pinata Secret API Key" value="" style="width: 680px;" /><br>
+<!-- Preview >> -->
+<div id="div-preview" class="highlight" style="white-space: pre; display: none"></div>
+
+
+<div style="margin-top: 60px">
+    <!-- <button onclick="">Preview</button> -->
+    <button id="button-preview" onclick="showPreview()" class="smartify">Preview &#xBB;</button>
+    <button id="button-back" onclick="goBack()" class="smartify" style="display: none">&#x00AB; Back</button>
+    <button id="button-smartify" onclick="" class="smartify" style="display: none">SMARTIFY (MINT)</button>
 </div>
 
-<div class="div-step">
-    <button onclick="" class="smartify">Smartify!&thinsp;&thinsp;(MINT)</button>
-</div>
+
 
 
 
