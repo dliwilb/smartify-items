@@ -13,21 +13,11 @@
 </head>
 <body>
 
-<!-- Header -->
-<div>
-    <div class="dropdown" style="display:inline; vertical-align:super;">
-        <button onclick="myFunction()" class="dropbtn" style="font-weight: bold; font-size: larger;">&nbsp;&#9776;&nbsp;</button>
-        <div id="myDropdown" class="dropdown-content">
-            <a href="index.html">Home</a>
-            <a href="assets.html">Assets</a>
-            <a href="transfer.html">Transfer</a>
-            <a href="mint.html">Mint</a>
-        </div>
-    </div>
-    &nbsp;
-    <h1 style="display: inline-block">Transfer [Testnet Rinkeby]</span></h1>
-    <h4>&nbsp;your NFT creations & collections on the smartBCH blockchain [Testnet Rinkeby]</h4>
-</div>
+<!-- Header >> -->
+<h1 id="h1-title" style="display: none">Transfer</h1>
+<div id="div-menu-dropdown"></div>
+<script src="script/menu-dropdown.js"></script>
+<!-- << Header -->
 
 <input name="nft-contract-address" id="nft-contract-address" type="text" style="width: 406px" placeholder="NFT contract address here: 0x..." onchange="getOwner0xAddress()">
 <input name="nf-token-id" id="nf-token-id" type="number" min="0" placeholder="Token ID" style="width: 120px" onchange="getOwner0xAddress()">
@@ -58,8 +48,6 @@
 <script src="script/common-layout.js"></script>
 <script src="script/smartify-transfer.js"></script>
 
-有問題不一定要找 <a href="https://noise.cash/u/liwi">https://noise.cash/u/liwi</a>，因為他也不一定會。
-<br><br>
-<div id="js-log" style="color: gray"></div>
+
 </body>
 </html>

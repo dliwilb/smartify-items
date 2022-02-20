@@ -1,90 +1,44 @@
 <!DOCTYPE html
 	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml" lang="zh-Hant-TW" xml:lang="zh-Hant-TW">
+
+
 <head>
-<title>lets be frens</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<style>
+    <title>Smartify</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style>
 
-    input[type='text'] { 
-        /* font-size: 24px;  */
-        font-family: monospace;
-    }
-	
-    .nft-token-info {
-        color: #555555;
-        /* display: inline-block; */
-        /* width: 512px; */
-    }
+    </style>
+    <link rel="stylesheet" href="css/common-style.css">
 
-    div.nft-item{
-        margin-top: 30px;
-        margin-bottom: 120px;
-    }
-
-    .nft-image {
-        /* display: block; */
-        margin: 10px;
-        max-width:512px;
-        max-height:512px;
-        width: auto;
-        height: auto;
-    }
-
-    a.creator {
-        color: #777777;
-        text-decoration:underline;
-        text-decoration-style: dotted;
-        text-decoration-color: #777777;
-    }
-
-</style>
-<link rel="stylesheet" href="css/frens-style.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@700&display=swap" rel="stylesheet">
-<link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@700&display=swap" rel="stylesheet">
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
 </head>
-<body leftmargin="6%" rightmargin="6%" style="color:#ffffff; background-color:#111111">
 
 
-<!-- Header -->
-<div>
-    <div class="dropdown" style="display:inline; vertical-align:super;">
-        <button onclick="myFunction()" class="dropbtn" style="font-weight: bold; font-size: larger;">&nbsp;&#9776;&nbsp;</button>
-        <div id="myDropdown" class="dropdown-content">
-            <a href="index.html">Home</a>
-            <a href="mint.html">Mint</a>
-            <a href="frens.html">Frens</a>
-            <a href="creators.html">Creators</a>
-            <a href="tokens.html">Tokens</a>
-            <a href="keepers.html">Keepers</a>
-            <a href="transfer.html">Transfer</a>
-            <a href="contract.html">Contract</a>
-        </div>
+<body>
+    <!-- Header >> -->
+    <h1 id="h1-title" style="display: none">Smartify</h1>
+    <div id="div-menu-dropdown"></div>
+    <script src="script/menu-dropdown.js"></script>
+    <!-- << Header -->
+
+
+    <div id="div-latest-status" style="color: #555555; text-align: right; vertical-align: top; margin-bottom: 20px;">
+        loading latest items...
     </div>
-    &nbsp;
-    <h1 style="display: inline-block">lets be frens v2.2 on Testnet Rinkeby</h1>
-</div>
-
-<div id="div-latest-status" style="color: #555555; text-align: right; vertical-align: top; margin-bottom: 20px;">Loading our latest frens...</div>
-<div id="div-latest-frens" style="text-align: center;"></div>
 
 
-<!-- Footer -->
-<!-- <hr> -->
-<br><br>
+    <!-- Footer -->
+    <br><br>
 
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"></script>
-<script src="script/frens-constants.js"></script>
-<script src="script/frens-abi-v2p2.js"></script>
-<script src="script/frens-latest.js"></script>
-<script src="script/frens-layout.js"></script>
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"></script>
 
-<span style="color: #555555">有問題不一定要找 <a href="https://noise.cash/u/liwi">https://noise.cash/u/liwi</a>，因為他也不一定會。</span>
-<br><br>
-<div id="js-log" style="color: gray"></div>
+
 </body>
 </html>

@@ -1,9 +1,5 @@
-console.log("smartify.js loaded");
-
 document.getElementById('api-key').value = getCookie("api-key");
 document.getElementById('secret-api-key').value = getCookie("secret-api-key");
-
-
 
 document.getElementById('button-for-file').addEventListener(
     'click', 
@@ -60,23 +56,13 @@ function showDiv(elementId){
 
 
 async function pinFileToIPFS() {
-    // imports needed for this function
-    // const axios = require('axios');
-    // const fs = require('fs');
-    // const FormData = require('form-data');
-
-    // let fs = new FileSystem();
-
 
     const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`;
-    // console.log(url);
 
     let file = document.getElementById('file-to-pin').files[0];
-    console.log(file);
 
     let data = new FormData();
     data.append('file', file);
-
 
     return axios.post(url,
         data,

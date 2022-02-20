@@ -34,7 +34,7 @@
 
 
 </style>
-<link rel="stylesheet" href="css/frens-style.css">
+<link rel="stylesheet" href="css/common-style.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@700&display=swap" rel="stylesheet">
@@ -43,24 +43,12 @@
 <body leftmargin="6%" rightmargin="6%" style="color:#ffffff; background-color:#111111">
 
 
-<!-- Header -->
-<div>
-    <div class="dropdown" style="display:inline; vertical-align:super;">
-        <button onclick="myFunction()" class="dropbtn" style="font-weight: bold; font-size: larger;">&nbsp;&#9776;&nbsp;</button>
-        <div id="myDropdown" class="dropdown-content">
-            <a href="index.html">Home</a>
-            <a href="mint.html">Mint</a>
-            <a href="frens.html">Frens</a>
-            <a href="creators.html">Creators</a>
-            <a href="tokens.html">Tokens</a>
-            <a href="keepers.html">Keepers</a>
-            <a href="transfer.html">Transfer</a>
-            <a href="contract.html">Contract</a>
-        </div>
-    </div>
-    &nbsp;
-    <h1 style="display: inline-block">creators</h1>
-</div>
+<!-- Header >> -->
+<h1 id="h1-title" style="display: none">Creators</h1>
+<div id="div-menu-dropdown"></div>
+<script src="script/menu-dropdown.js"></script>
+<!-- << Header -->
+
 
 <input name="creator-address" id="creator-address" type="text" placeholder="0x..." style="width: 306px" onchange="onShowCreated()">
 
@@ -79,8 +67,6 @@
 <script src="script/frens-creators.js"></script>
 <script src="script/frens-layout.js"></script>
 
-<span style="color: #555555">有問題不一定要找 <a href="https://noise.cash/u/liwi">https://noise.cash/u/liwi</a>，因為他也不一定會。</span>
-<br><br>
-<div id="js-log" style="color: gray"></div>
+
 </body>
 </html>
