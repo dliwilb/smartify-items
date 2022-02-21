@@ -1,79 +1,83 @@
 <!DOCTYPE html
 	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml" lang="zh-Hant-TW" xml:lang="zh-Hant-TW">
+
+
 <head>
-<title>mint frens</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<style>
-</style>
-<link rel="stylesheet" href="css/common-style.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@700&display=swap" rel="stylesheet">
+    <title>Contract</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style>
 
-<link rel="icon" type="image/png" sizes="32x32" href="./smartify_32_32_trans.png">
+    </style>
+    <link rel="stylesheet" href="css/common-style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@700&display=swap" rel="stylesheet">
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="./image/smartify_32_32_trans.png">
 </head>
-<body leftmargin="6%" rightmargin="6%" style="color:#ffffff; background-color:#111111">
 
 
-<!-- Header >> -->
-<h1 id="h1-title" style="display: none">Contract</h1>
-<div id="div-menu-dropdown"></div>
-<script src="script/menu-dropdown.js"></script>
-<!-- << Header -->
+<body>
+    <!-- Header >> -->
+    <h1 id="h1-title" style="display: none">Contract</h1>
+    <div id="div-menu-dropdown"></div>
+    <script src="script/menu-dropdown.js"></script>
+    <!-- << Header -->
 
+    <h4>
+        Contract Address: 
+        <br>
+        <a href="https://rinkeby.etherscan.io/address/0x457bbBc5061dbBd5797612a08f88E97a8d4eFd6e">0x457bbBc5061dbBd5797612a08f88E97a8d4eFd6e</a>
+    </h4>
 
-
-<h4>
-    Contract Address: 
     <br>
-    <a href="https://rinkeby.etherscan.io/address/0x457bbBc5061dbBd5797612a08f88E97a8d4eFd6e">0x457bbBc5061dbBd5797612a08f88E97a8d4eFd6e</a>
-</h4>
 
-<br>
+    <button type="button" onclick="readContractStatVar()">Read Contract State Variables</button>
+    <ul id="list-contract-info"></ul>
 
-<button type="button" onclick="readContractStatVar()">Read Contract State Variables</button>
-<ul id="list-contract-info"></ul>
+    <br>
 
-<br>
+    <button type="button" onclick="readUserAddedByAdmin()">Query UserAddedByAdmin Events (last 24hr)</button>
+    <ul id="list-UserAddedByAdmin"></ul>
 
-<button type="button" onclick="readUserAddedByAdmin()">Query UserAddedByAdmin Events (last 24hr)</button>
-<ul id="list-UserAddedByAdmin"></ul>
+    <br>
 
-<br>
+    <button type="button" onclick="readUserAddedByUser()">Query UserAddedByUser Events (last 24hr)</button>
+    <ul id="list-UserAddedByUser"></ul>
 
-<button type="button" onclick="readUserAddedByUser()">Query UserAddedByUser Events (last 24hr)</button>
-<ul id="list-UserAddedByUser"></ul>
+    <br>
 
-<br>
+    <input name="address" id="address" type="text" placeholder="address to be checked/whitelisted" style="width: 486px">
+    <br>
+    <button type="button" onclick="verifyUser()">verifyUser</button>
+    <button type="button" onclick="verifyAdmin()">verifyAdmin</button>
+    <button type="button" onclick="adminAddUser()">adminAddUser</button>
+    <button type="button" onclick="userAddUser()">userAddUser</button>
+    <button type="button" onclick="addAdmin()">addAdmin</button>
+    <div id="div-address-info"></div>
 
-<input name="address" id="address" type="text" placeholder="address to be checked/whitelisted" style="width: 486px">
-<br>
-<button type="button" onclick="verifyUser()">verifyUser</button>
-<button type="button" onclick="verifyAdmin()">verifyAdmin</button>
-<button type="button" onclick="adminAddUser()">adminAddUser</button>
-<button type="button" onclick="userAddUser()">userAddUser</button>
-<button type="button" onclick="addAdmin()">addAdmin</button>
-<div id="div-address-info"></div>
+    <br>
 
-<br>
-
-<input type="number" min="1" name="token-id" id="token-id" type="text" placeholder="Token ID" style="width: 100px">
-<br>
-<button type="button" onclick="tokenURI()">tokenURI</button>
-<button type="button" onclick="ownerOf()">ownerOf</button>
-<button type="button" onclick="royaltyInfo()">royaltyInfo</button>
-<div id="div-token-info"></div>
-<br>
+    <input type="number" min="1" name="token-id" id="token-id" type="text" placeholder="Token ID" style="width: 100px">
+    <br>
+    <button type="button" onclick="tokenURI()">tokenURI</button>
+    <button type="button" onclick="ownerOf()">ownerOf</button>
+    <button type="button" onclick="royaltyInfo()">royaltyInfo</button>
+    <div id="div-token-info"></div>
+    <br>
 
 
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"></script>
-<!-- <script src="https://cdn.jsdelivr.net/npm/keccak256@latest/keccak256.js"></script> -->
-<script src="script/connect-wallet-and-network.js"></script>
-<script src="script/contract-abi.js"></script>
-<script src="script/smartify-contract.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/keccak256@latest/keccak256.js"></script> -->
+    <script src="script/connect-wallet-and-network.js"></script>
+    <script src="script/contract-abi.js"></script>
+    <script src="script/https-rpc.js"></script>
+    <script src="script/smartify-contract.js"></script>
 
 
 </body>

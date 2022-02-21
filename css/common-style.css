@@ -1,31 +1,3 @@
-span.nftdisplay {
-    display: inline-block;
-    width: 290px;
-}
-
-span.text-token-id {
-    display: inline-block;
-    width: 140px;
-}
-
-
-select {
-    /* appearance: none; */
-    /* background-color: transparent; */
-    border: none;
-    /* padding: 0 1em 0 0; */
-    padding: 4px 10px;
-    /* margin: 0; */
-    margin: 4px 4px;
-    font-family: inherit;
-    font-size: inherit;
-    line-height: inherit;
-    cursor: pointer;
-}
-
-
-
-
 /* Re-organized */
 
     h1.title {
@@ -169,6 +141,63 @@ select {
         line-height: inherit;
         /* cursor: pointer; */
     }
+
+    img.nft-item-image {
+        max-height: 450px;
+        max-width: 450px;
+    }
+
+    div.nft-description {
+        width: 410px;
+        margin: 20px auto 10px;
+        text-align: left;
+        white-space: pre-wrap;
+    }
+    
+
+    span.nftdisplay {
+        display: inline-block;
+        width: 240px;
+        text-align: center;
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+
+    span.nftdisplay + span.nftdisplay {
+        margin-top: 45px;
+    }
+
+    /* span.imgbox > img.assets {
+        vertical-align:middle;
+    } */
+
+    span.imgbox {
+        display: inline-block;
+        width: 240px;
+        height: 240px;
+    }
+
+    img.assets {
+        display: inline-block;
+        height: 100%;
+        margin: 5px;
+        max-width:220px;
+        max-height:220px;
+        width: auto;
+        height: auto;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    span.emptybox {
+        display: inline-block;
+        height: 20px;
+    }
+
+    img.transfer-sign {
+        opacity: 0.3;
+    }
+
 
     
 

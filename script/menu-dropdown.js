@@ -9,6 +9,7 @@ document.getElementById('div-menu-dropdown').innerHTML =
         <a href="index.html">Home</a>
         <a href="mint.html">Mint</a>
         <a href="items.html">Items</a>
+        <a href="assets.html">Manage Items</a>
         <a href="creators.html">Creators</a>
         <a href="collectors.html">Collectors</a>
         <a href="transfer.html">Transfer</a>

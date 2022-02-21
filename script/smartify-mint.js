@@ -244,14 +244,14 @@ async function smartify(){
 
     // 
 
-    document.getElementById('span-status').innerHTML = 'Uploading file to IPFS... <img src="Spinner-1s-200px.png" style="max-height: 60px">';
+    document.getElementById('span-status').innerHTML = 'Uploading file to IPFS... <img src="./image/Spinner-1s-200px.png" style="max-height: 60px">';
 
     const fileIpfsHash = await pinFileToIPFS();
     console.log(fileIpfsHash);
 
     // 
 
-    document.getElementById('span-status').innerHTML = 'Uploading metadata to IPFS... <img src="Spinner-1s-200px.png" style="max-height: 60px">';
+    document.getElementById('span-status').innerHTML = 'Uploading metadata to IPFS... <img src="./image/Spinner-1s-200px.png" style="max-height: 60px">';
 
     const jsonIpfsHash = await pinJSONToIPFS(fileIpfsHash);
     console.log(jsonIpfsHash);
@@ -263,7 +263,7 @@ async function smartify(){
 
     // 
 
-    document.getElementById('span-status').innerHTML = 'Minting NFT on smartBCH... <img src="Spinner-1s-200px.png" style="max-height: 60px">';
+    document.getElementById('span-status').innerHTML = 'Minting NFT on smartBCH... <img src=".image/Spinner-1s-200px.png" style="max-height: 60px">';
 
 	const provider = new ethers.providers.Web3Provider(window.ethereum);
 	const signer = provider.getSigner();
@@ -302,6 +302,13 @@ async function pinJSONToIPFS(fileIpfsHash) {
     // const hashtags = parseHashtags().map(s => `"${s}"`).join(", \r\n");
     // const hashtags = parseHashtags().join(", ");
     const hashtags = parseHashtags();
+    let hashtagsOnly = [];
+
+    for (let i = 0; i < hashtags.length; i++){
+        if ( hashtags[i].match(/^\#\w+/) ) {
+            hashtagsOnly.push(hashtags[i]);
+        }
+    }
 
     const JSONBody = {
         pinataMetadata: {
@@ -314,11 +321,11 @@ async function pinJSONToIPFS(fileIpfsHash) {
             "platform": "Smartify", 
             "symbol": "ITMS", 
             "creator": connected0xAccount, 
-            "url": `ipfs://${fileIpfsHash}`, 
+            "ipfsuri": `ipfs://${fileIpfsHash}`, 
             "mimetype": mimeType, 
             "editions": document.getElementById('nft-editions').value, 
             "royalties": document.getElementById('nft-royalties').value + '%', 
-            "hashtags": hashtags
+            "hashtags": hashtagsOnly
         }
     };
     
