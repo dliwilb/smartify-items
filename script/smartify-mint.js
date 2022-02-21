@@ -56,24 +56,30 @@ function showDiv(elementId){
 }
 
 
-document.getElementById('nft-name').value = 'TEST';
-document.getElementById('nft-description').value = 
-`123
-獨享豬腳很難瘦
-簡稱獨腳瘦
+// document.getElementById('nft-name').value = 'TEST';
+// document.getElementById('nft-description').value = 
+// `123
+// 獨享豬腳很難瘦
+// 簡稱獨腳瘦
 
-實在想不到什麼好點子
-找了年代久遠檔案照充數
-而且還對焦失敗
-這是海德堡的德國豬腳
+// 實在想不到什麼好點子
+// 找了年代久遠檔案照充數
+// 而且還對焦失敗
+// 這是海德堡的德國豬腳
 
-空格  空格  空格
-`;
-document.getElementById('nft-hashtags').value = '#smartBCH, #ptt, test, #noise, #taiwan';
+// 空格  空格  空格
+// `;
+// document.getElementById('nft-hashtags').value = '#smartBCH, #ptt, test, #noise, #taiwan';
 
 
 
 function goBack() {
+    inPreview = false;
+
+    document.documentElement.scrollTop = document.body.scrollTop = 0;
+    
+    console.log('inPreview: ' + inPreview);
+
     document.getElementById('div-preview').style.display = 'none';
 
     document.getElementById('button-preview').style.display = 'inline';
@@ -84,10 +90,34 @@ function goBack() {
 }
 
 
-function showPreview() {
+// https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
+const mimeTypes = [
+    'image/bmp', 
+    'image/gif', 
+    'image/jpeg', 
+    'image/png', 
+    // 'application/pdf', 
+    'image/svg+xml', 
+    'image/tiff'
+];
+
+let accountWeb3 = '';
+let mimeType = '';
+let inPreview = false;
+let mintTo = '';
+
+async function showPreview() {
 
     if ( document.getElementById('file-to-smartify').files[0] ){
-        // console.log('yes');
+        mimeType = document.getElementById('file-to-smartify').files[0].type;
+        if ( mimeTypes.includes(mimeType) ) {
+            console.log(mimeType);
+        } else {
+            alert(`File type ${mimeType} is not supported. For the time being please consider bmp, gif, jpeg, png, svg, tiff files.`);
+
+            return 0;
+        }
+
     } else {
         alert('Please select a file.');
         return 0;
@@ -101,6 +131,34 @@ function showPreview() {
         document.getElementById('nft-royalties').value = 0;
     }
 
+    await connectWallet();
+    await switchNetwork();
+
+    mintTo = document.getElementById('nft-recipient').value;
+    if (mintTo == ''){
+        mintTo = connected0xAccount;
+    } else {
+        if ( ! ethers.utils.isAddress(mintTo) ){
+            alert('Please check recipient address.');
+            return 0;
+        }
+    }
+
+    if ( ! (isWalletConnected && isNetworkConnected) ) {
+        // console.log('Please connect wallet to smartBCH network.');
+        alert('Please connect wallet to the smartBCH network.');
+        return 0;
+    }
+
+    // window.ethereum.request({ method: 'eth_requestAccounts' })
+    // .then( ( result ) => { accountWeb3 = result} )
+
+    inPreview = true;
+    console.log('inPreview: ' + inPreview);
+
+    // document.documentElement.scrollTop || document.body.scrollTop
+    document.documentElement.scrollTop = document.body.scrollTop = 0;
+
 
     let previewContent = '';
 
@@ -109,8 +167,11 @@ function showPreview() {
 
     previewContent = 
 `
-<img src="${URL.createObjectURL(document.getElementById('file-to-smartify').files[0])}" style="max-width: 600px; max-height: 800px">
+<img src="${URL.createObjectURL(document.getElementById('file-to-smartify').files[0])}" style="max-width: 450px; max-height: 600px">
 
+
+[ Creator ]
+<div style="margin-left: 30px; display: inline-block">${connected0xAccount}</div>
 
 [ Title ]
 <div style="margin-left: 30px; display: inline-block">${document.getElementById('nft-name').value}</div>
@@ -138,8 +199,13 @@ function showPreview() {
 [ Royalties Suggeston ]
 <div style="margin-left: 30px; display: inline-block">${document.getElementById('nft-royalties').value} %</div>
 
-
 [ Pinata API Keys ]
+<div style="margin-left: 30px; display: inline-block">${document.getElementById('api-key').value}</div>
+<div style="margin-left: 30px; display: inline-block">${document.getElementById('secret-api-key').value}</div>
+
+[ NFT Recipient ]
+<div style="margin-left: 30px; display: inline-block">${mintTo}</div>
+
 ` 
 
 
@@ -168,107 +234,133 @@ function parseHashtags(){
 }
 
 
+
+
+let isSmartifying = false;
+
 async function smartify(){
+
+    isSmartifying = true;
+
+    // 
+
+    document.getElementById('span-status').innerHTML = 'Uploading file to IPFS... <img src="Spinner-1s-200px.png" style="max-height: 60px">';
+
     const fileIpfsHash = await pinFileToIPFS();
+    console.log(fileIpfsHash);
+
+    // 
+
+    document.getElementById('span-status').innerHTML = 'Uploading metadata to IPFS... <img src="Spinner-1s-200px.png" style="max-height: 60px">';
+
+    const jsonIpfsHash = await pinJSONToIPFS(fileIpfsHash);
+    console.log(jsonIpfsHash);
+    
+    // 
+
+    // return[str.substr(0, 32), str_1, str.substr(32), str_2 + zeros.substr(0, zerosToPad)];
+    const [part_1, part_2] = cidToBytes32(jsonIpfsHash);
+
+    // 
+
+    document.getElementById('span-status').innerHTML = 'Minting NFT on smartBCH... <img src="Spinner-1s-200px.png" style="max-height: 60px">';
+
+	const provider = new ethers.providers.Web3Provider(window.ethereum);
+	const signer = provider.getSigner();
+    const smartifyContract = new ethers.Contract(smartifyContractAddress, smartifyContractABI, signer);
+
+    const mintFee = await smartifyContract.mintFee();
+
+    let contractFunction = await smartifyContract.createToken(
+        document.getElementById('nft-editions').value, 
+        mintTo, 
+        part_1, 
+        part_2, 
+        document.getElementById('nft-royalties').value * 100,
+        { value: BigInt(mintFee) * BigInt(document.getElementById('nft-editions').value) });
+
+    let tx = await contractFunction.wait();
+    let event = tx.events[0];
+    console.log(event);
+    // let value = event.args[2];
+    // let tokenId = value.toNumber()
+
+    document.getElementById('span-status').innerHTML = 'NFT(s) minted on smartBCH.';
+
+    // 
+
+    isSmartifying = false;    
+
 }
 
 
-// let data = new FormData();
-// files.forEach((file) => {
-//     //for each file stream, we need to include the correct relative file path
-//     data.append(`file`, fs.createReadStream(file), {
-//         filepath: basePathConverter(src, file)
-//     });
-// });
+// const hashtags = parseHashtags().map(s => `"${s}"`).join(", \r\n");
+// console.log(hashtags);
 
+async function pinJSONToIPFS(fileIpfsHash) {
 
-function createJSON() {
-    // https://developer.mozilla.org/en-US/docs/Web/API/FormData/Using_FormData_Objects
+    // const hashtags = parseHashtags().map(s => `"${s}"`).join(", \r\n");
+    // const hashtags = parseHashtags().join(", ");
+    const hashtags = parseHashtags();
 
-    let _data = new FormData();
-
-    for (let i = 0; i < 6; i++){
-
-        let _content = 
-`{
-    "name": "lets be frens",
-    "description": "lets be frens #${i}",
-    "image": "ipfs://QmQxShCc1WA4JW1Wq8rvvM9fbDxMUHJNzcsYBA37FZz98N"
-}`;
-
-        let _blob = new Blob([_content], { type: "application/json"});
-        // _data.append(`file`, _blob, {
-        //     filepath: `./folder/https-${i}.json`
-        // });
-
-        let _file = new File([_blob], `https-${i}.json`, {type: "text/plain"});
-        _data.append(`https-${i}.json`, _file, {
-            filepath: `./folder/https-${i}.json`
-        });
-    }
-
-    // console.log(_data);
-    for (var pair of _data.entries()) {
-        console.log(pair[0]+ ', ' + pair[1]); 
-    }
-
-    return _data;
-}
-
-
-async function pinFileFolderToIPFS() {
-    const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`;
-
-    const data = createJSON();
-    for (var pair of data.entries()) {
-        console.log(pair[0]+ ', ' + pair[1]); 
-    }
-
-    const metadata = JSON.stringify({
-        name: 'testname',
-        keyvalues: {
-            exampleKey: 'exampleValue'
+    const JSONBody = {
+        pinataMetadata: {
+            "name": "[Smartify] " + document.getElementById('nft-name').value
+        },
+        pinataContent: {
+            "name": document.getElementById('nft-name').value, 
+            "description": document.getElementById('nft-description').value, 
+            "image": `https://ipfs.io/ipfs/${fileIpfsHash}`, 
+            "platform": "Smartify", 
+            "symbol": "ITMS", 
+            "creator": connected0xAccount, 
+            "url": `ipfs://${fileIpfsHash}`, 
+            "mimetype": mimeType, 
+            "editions": document.getElementById('nft-editions').value, 
+            "royalties": document.getElementById('nft-royalties').value + '%', 
+            "hashtags": hashtags
         }
-    });
-    data.append('pinataMetadata', metadata);
+    };
+    
+    // console.log(JSONBody);
+    // return 0;
 
+    // const axios = require('axios');
 
-    let ipfsCID = '';
-    await axios.post(url,
-        data,
-        {
-            maxBodyLength: 'Infinity', //this is needed to prevent axios from erroring out with large directories
+    let ipfsJsonCID = '';
+    const url = `https://api.pinata.cloud/pinning/pinJSONToIPFS`;
+    await axios
+        .post(url, JSONBody, {
             headers: {
-                'Content-Type': `multipart/form-data; boundary= ${data._boundary}`,
-                'pinata_api_key': document.getElementById('api-key').value, 
-                'pinata_secret_api_key': document.getElementById('secret-api-key').value
+                pinata_api_key: document.getElementById('api-key').value, 
+                pinata_secret_api_key: document.getElementById('secret-api-key').value
             }
-        }
-    ).then(function (response) {
-        console.log(response.data);
-        ipfsCID =  response.data.IpfsHash;
-    }).catch(function (error) {
-        console.log(error);
-    });
+        })
+        .then(function (response) {
+            //handle response here
+            console.log(response.data);
+            // document.getElementById('nft-meta-ipfs').value = "ipfs://" + response.data.IpfsHash;
+            ipfsJsonCID =  response.data.IpfsHash;
+        })
+        .catch(function (error) {
+            //handle error here
+            console.log(error);
+        });
 
-    return ipfsCID;
-
+    return ipfsJsonCID;
 }
-
-pinFileFolderToIPFS();
-
 
 
 
 async function pinFileToIPFS() {
     const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`;
     let file = document.getElementById('file-to-smartify').files[0];
-    console.log(file);
+    // console.log(file);
 
     let data = new FormData();
     data.append('file', file);
 
-    let ipfsCID = '';
+    let ipfsFileCID = '';
     await axios.post(url,
         data,
         {
@@ -287,86 +379,57 @@ async function pinFileToIPFS() {
         console.log(response.data);
         // document.getElementById('nft-image-ipfs').value = "ipfs://" + response.data.IpfsHash;
         // ipfs://QmRV22bKxopT1pbGxSZ8C2v5oUrsBjmrFRwwcjitAvbM2v
-        ipfsCID =  response.data.IpfsHash;
+        ipfsFileCID =  response.data.IpfsHash;
     }).catch(function (error) {
         console.log(error);
     });
-    return ipfsCID;
+
+    return ipfsFileCID;
+
 }
 
-async function pinJSONToIPFS() {
 
-    // {
-    //     /* The "pinataMetadata" object will not be part of your content added to IPFS */
-    //     /* Pinata simply stores the metadata provided to help you easily query your JSON object pins */
-    //     pinataOptions: {
-    //         cidVersion: (the integer for your desired CID version),
-    //         customPinPolicy: (custom pin policy for this json)
-    //     },
-    //     pinataMetadata: {
-    //         name: (optional) - This is a custom name you can have for referencing your JSON object. This will be displayed in the Pin Manager "name" column if provided,
-    //         keyvalues: {
-    //             customKey: customValue,
-    //             customKey2: customValue2
-    //         }
-    //     },
-    //     /* The contents of the "pinataContent" object will be added to IPFS */
-    //     /* The hash provided back will only represent the JSON contained in this object */
-    //     /* The JSON the returned hash links to will NOT contain the "pinataMetadata" object above */
-    //     pinataContent: {
-    //         Any valid JSON goes here
-    //     }
-    // }
+// const keccak256 = require('keccak256')
 
-    const JSONBody = {
-        pinataMetadata: {
-            "name": "lets be frens - json"
-        },
-        pinataContent: {
-            "name": "lets be frens",
-            "description": "lets be frens",
-            "image": "ipfs://QmQxShCc1WA4JW1Wq8rvvM9fbDxMUHJNzcsYBA37FZz98N"
-        }
-    };
+// console.log(keccak256('hello').toString('hex')) // "1c8aff950685c2ed4bc3174f3472287b56d9517b9c948127319a09a7a36deac8"
 
-    // const axios = require('axios');
+// console.log(keccak256(Buffer.from('hello')).toString('hex')) // "1c8aff950685c2ed4bc3174f3472287b56d9517b9c948127319a09a7a36deac8"
 
-    const url = `https://api.pinata.cloud/pinning/pinJSONToIPFS`;
-    return axios
-        .post(url, JSONBody, {
-            headers: {
-                pinata_api_key: document.getElementById('api-key').value, 
-                pinata_secret_api_key: document.getElementById('secret-api-key').value
-            }
-        })
-        .then(function (response) {
-            //handle response here
-            console.log(response.data);
-            // document.getElementById('nft-meta-ipfs').value = "ipfs://" + response.data.IpfsHash;
+// console.log(keccak256('QmaPkJPCPEWc2ue2vmRa2i5ZqTfqufK2Qyky1Y3zVeA6X9').toString('hex'))
+// 43b58d50f7bc72987bd0f4d93a06a919c80a19644e8da7f3f4d9589a45a0f730
 
-        })
-        .catch(function (error) {
-            //handle error here
-            console.log(error);
-        });
-    
+// console.log(ethers.utils.id('QmaPkJPCPEWc2ue2vmRa2i5ZqTfqufK2Qyky1Y3zVeA6X9'));
+// console.log(ethers.utils.id('QmaPkJPCPEWc2ue2vmRa'));
+
+// https://rinkeby.etherscan.io/address/0xfb0c28b3f49c907907b68d5554baec2379d7704b#readContract
+// QmbzgiEUepAmw3VKXfXKwyKx2ayqGmj5AKe6hu5eHzCppM
+// QmbzgiEUepAmw3VKXfXKwyKx2ayqGmj5
+// AKe6hu5eHzCppM
+// 0x516d627a676945556570416d7733564b5866584b77794b7832617971476d6a35
+// 0x414b653668753565487a4370704d000000000000000000000000000000000000
+
+// console.log(cidToBytes32('QmbzgiEUepAmw3VKXfXKwyKx2ayqGmj5AKe6hu5eHzCppM'));
+// [
+//     "0x516d627a676945556570416d7733564b5866584b77794b7832617971476d6a35",
+//     "0x414b653668753565487a4370704d000000000000000000000000000000000000"
+// ]
+
+function cidToBytes32(str) {
+    str_1 = '0x' + ascii_to_hexa(str.substring(0, 32));
+    str_2 = '0x' + ascii_to_hexa(str.substring(32, 64));
+
+    let zeros = '000000000000000000000000000000000000000000000000000000000000000000';     // '0' x 66
+    const zerosToPad = 66 - str_2.length;
+
+    return[str_1, str_2 + zeros.substring(0, zerosToPad)];
 }
 
-async function mintNFT() {
-	const provider = new ethers.providers.Web3Provider(window.ethereum);
-	const signer = provider.getSigner();
-    const smartifyContract = new ethers.Contract(smartifyContractAddress, smartifyContractABI, signer)
-		
-	let mintTo = document.getElementById('nft-recipient-address').value;
-	let tokenId = document.getElementById('nft-token-ID').value;
-	let tokenUri = document.getElementById('nft-meta-ipfs').value;
-	// console.log(mintTo + tokenId + tokenUri);
-	
-	// function mint(address _to, uint256 _tokenId, string calldata _uri) external onlyOwner {
-    let transaction = await contract.mint(mintTo, tokenId, tokenUri);
-    // let tx = await transaction.wait();
-    // let event = tx.events[0];
-    // let value = event.args[2];
-    // let tokenId = value.toNumber()
-	
-}
+
+function ascii_to_hexa(str) {
+    var arr1 = [];
+    for (var n = 0, l = str.length; n < l; n ++) {
+      var hex = Number(str.charCodeAt(n)).toString(16);
+      arr1.push(hex);
+    }
+    return arr1.join('');
+  }

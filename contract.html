@@ -6,18 +6,13 @@
 <title>mint frens</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <style>
-
-    input[type='text'] { 
-        /* font-size: 24px;  */
-        font-family: monospace;
-    }
-	
 </style>
 <link rel="stylesheet" href="css/common-style.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@700&display=swap" rel="stylesheet">
-<link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+
+<link rel="icon" type="image/png" sizes="32x32" href="./smartify_32_32_trans.png">
 </head>
 <body leftmargin="6%" rightmargin="6%" style="color:#ffffff; background-color:#111111">
 
@@ -31,9 +26,9 @@
 
 
 <h4>
-    Contract Address V2.2 (current): 
+    Contract Address: 
     <br>
-    <a href="https://rinkeby.etherscan.io/address/0x69F511EAca22eD5c5f48ba3d5D3D0442340948c9">0x69F511EAca22eD5c5f48ba3d5D3D0442340948c9</a>
+    <a href="https://rinkeby.etherscan.io/address/0x457bbBc5061dbBd5797612a08f88E97a8d4eFd6e">0x457bbBc5061dbBd5797612a08f88E97a8d4eFd6e</a>
 </h4>
 
 <br>
@@ -43,39 +38,42 @@
 
 <br>
 
-<button type="button" onclick="readWhitelisted()">Query userAdded Events</button>
-<ul id="list-whitelisted"></ul>
+<button type="button" onclick="readUserAddedByAdmin()">Query UserAddedByAdmin Events (last 24hr)</button>
+<ul id="list-UserAddedByAdmin"></ul>
 
 <br>
 
-<input name="address-to-be-whitelisted" id="address-to-be-whitelisted" type="text" placeholder="address to be whitelisted" style="width: 486px">
+<button type="button" onclick="readUserAddedByUser()">Query UserAddedByUser Events (last 24hr)</button>
+<ul id="list-UserAddedByUser"></ul>
+
+<br>
+
+<input name="address" id="address" type="text" placeholder="address to be checked/whitelisted" style="width: 486px">
 <br>
 <button type="button" onclick="verifyUser()">verifyUser</button>
-<button type="button" onclick="addUser()">addUser</button>
-<button type="button" onclick="addUserWhitelistWaived()">addUserWhitelistWaived</button>
+<button type="button" onclick="verifyAdmin()">verifyAdmin</button>
+<button type="button" onclick="adminAddUser()">adminAddUser</button>
+<button type="button" onclick="userAddUser()">userAddUser</button>
+<button type="button" onclick="addAdmin()">addAdmin</button>
 <div id="div-address-info"></div>
 
-<br><br><br><br><br><br>
+<br>
 
-<h4>
-    Contract Address V1.0: 
-    <br>
-    <a href="https://rinkeby.etherscan.io/address/0xC2CFD6dFbC52319f8F34D056F10EB49016925d27">0xC2CFD6dFbC52319f8F34D056F10EB49016925d27</a>
-</h4>
+<input type="number" min="1" name="token-id" id="token-id" type="text" placeholder="Token ID" style="width: 100px">
+<br>
+<button type="button" onclick="tokenURI()">tokenURI</button>
+<button type="button" onclick="ownerOf()">ownerOf</button>
+<button type="button" onclick="royaltyInfo()">royaltyInfo</button>
+<div id="div-token-info"></div>
+<br>
 
 
-<!-- Footer -->
-<!-- <hr><br> -->
-<br><br>
-
-<div id="waifusdiv" align="center"></div>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"></script>
-<script src="script/frens-constants.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/keccak256@latest/keccak256.js"></script> -->
 <script src="script/connect-wallet-and-network.js"></script>
-<script src="script/frens-abi-v2p2.js"></script>
-<script src="script/frens-contract.js"></script>
-<script src="script/frens-layout.js"></script>
+<script src="script/contract-abi.js"></script>
+<script src="script/smartify-contract.js"></script>
 
 
 </body>
