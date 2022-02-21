@@ -41,6 +41,8 @@ function updateFile(){
     // console.log('file changed');
     if (document.getElementById('file-to-smartify').value != ''){
         document.getElementById('button-for-file').innerHTML = document.getElementById('file-to-smartify').files[0].name;
+    } else {
+        document.getElementById('button-for-file').innerHTML = 'Select File to Smartify';
     }
 }
 
@@ -57,8 +59,15 @@ function showDiv(elementId){
 document.getElementById('nft-name').value = 'TEST';
 document.getElementById('nft-description').value = 
 `123
-456
-789
+獨享豬腳很難瘦
+簡稱獨腳瘦
+
+實在想不到什麼好點子
+找了年代久遠檔案照充數
+而且還對焦失敗
+這是海德堡的德國豬腳
+
+空格  空格  空格
 `;
 document.getElementById('nft-hashtags').value = '#smartBCH, #ptt, test, #noise, #taiwan';
 
@@ -76,6 +85,23 @@ function goBack() {
 
 
 function showPreview() {
+
+    if ( document.getElementById('file-to-smartify').files[0] ){
+        // console.log('yes');
+    } else {
+        alert('Please select a file.');
+        return 0;
+    }
+
+    if ( document.getElementById('nft-editions').value == '' ){
+        document.getElementById('nft-editions').value = 1;
+    }
+
+    if ( document.getElementById('nft-royalties').value == '' ){
+        document.getElementById('nft-royalties').value = 0;
+    }
+
+
     let previewContent = '';
 
     const hashtags = parseHashtags();
@@ -86,13 +112,13 @@ function showPreview() {
 <img src="${URL.createObjectURL(document.getElementById('file-to-smartify').files[0])}" style="max-width: 600px; max-height: 800px">
 
 
-[Title]
+[ Title ]
 <div style="margin-left: 30px; display: inline-block">${document.getElementById('nft-name').value}</div>
 
-[Description]
+[ Description ]
 <div style="margin-left: 30px; display: inline-block">${document.getElementById('nft-description').value}</div>
 
-[Hashtags]
+[ Hashtags ]
 <div style="margin-left: 30px; display: inline-block">`;
 
     for (let i = 0; i < hashtags.length; i++){
@@ -103,6 +129,18 @@ function showPreview() {
     }
 
     previewContent += '</div>';
+    previewContent += 
+`
+
+[ Editions ]
+<div style="margin-left: 30px; display: inline-block">${document.getElementById('nft-editions').value}</div>
+
+[ Royalties Suggeston ]
+<div style="margin-left: 30px; display: inline-block">${document.getElementById('nft-royalties').value} %</div>
+
+
+[ Pinata API Keys ]
+` 
 
 
     // previewContent += hashtags;
@@ -128,6 +166,98 @@ function parseHashtags(){
     // console.log(hashtags);
     return _hashtags;
 }
+
+
+async function smartify(){
+    const fileIpfsHash = await pinFileToIPFS();
+}
+
+
+// let data = new FormData();
+// files.forEach((file) => {
+//     //for each file stream, we need to include the correct relative file path
+//     data.append(`file`, fs.createReadStream(file), {
+//         filepath: basePathConverter(src, file)
+//     });
+// });
+
+
+function createJSON() {
+    // https://developer.mozilla.org/en-US/docs/Web/API/FormData/Using_FormData_Objects
+
+    let _data = new FormData();
+
+    for (let i = 0; i < 6; i++){
+
+        let _content = 
+`{
+    "name": "lets be frens",
+    "description": "lets be frens #${i}",
+    "image": "ipfs://QmQxShCc1WA4JW1Wq8rvvM9fbDxMUHJNzcsYBA37FZz98N"
+}`;
+
+        let _blob = new Blob([_content], { type: "application/json"});
+        // _data.append(`file`, _blob, {
+        //     filepath: `./folder/https-${i}.json`
+        // });
+
+        let _file = new File([_blob], `https-${i}.json`, {type: "text/plain"});
+        _data.append(`https-${i}.json`, _file, {
+            filepath: `./folder/https-${i}.json`
+        });
+    }
+
+    // console.log(_data);
+    for (var pair of _data.entries()) {
+        console.log(pair[0]+ ', ' + pair[1]); 
+    }
+
+    return _data;
+}
+
+
+async function pinFileFolderToIPFS() {
+    const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`;
+
+    const data = createJSON();
+    for (var pair of data.entries()) {
+        console.log(pair[0]+ ', ' + pair[1]); 
+    }
+
+    const metadata = JSON.stringify({
+        name: 'testname',
+        keyvalues: {
+            exampleKey: 'exampleValue'
+        }
+    });
+    data.append('pinataMetadata', metadata);
+
+
+    let ipfsCID = '';
+    await axios.post(url,
+        data,
+        {
+            maxBodyLength: 'Infinity', //this is needed to prevent axios from erroring out with large directories
+            headers: {
+                'Content-Type': `multipart/form-data; boundary= ${data._boundary}`,
+                'pinata_api_key': document.getElementById('api-key').value, 
+                'pinata_secret_api_key': document.getElementById('secret-api-key').value
+            }
+        }
+    ).then(function (response) {
+        console.log(response.data);
+        ipfsCID =  response.data.IpfsHash;
+    }).catch(function (error) {
+        console.log(error);
+    });
+
+    return ipfsCID;
+
+}
+
+pinFileFolderToIPFS();
+
+
 
 
 async function pinFileToIPFS() {

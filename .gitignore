@@ -1,2 +1,5 @@
 /scrap/
 /contract/
+*.pem
+/ipfs-fs/
+node-tests.js
