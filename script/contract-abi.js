@@ -1,10 +1,48 @@
-const smartifyContractAddress = '0x82bb2033ff3511a5e4A9dc2d92bcc7eB5E89433e';
+const smartifyContractAddress = '0xFEa705b99c71a48488119aD93DcC0cA49991caAE';
 
 const smartifyContractABI = [
 	{
 		"inputs": [],
 		"stateMutability": "nonpayable",
 		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "newAdmin",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "approvedBy",
+				"type": "address"
+			}
+		],
+		"name": "AdminAdded",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "removedAdmin",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "removedBy",
+				"type": "address"
+			}
+		],
+		"name": "AdminRemoved",
+		"type": "event"
 	},
 	{
 		"anonymous": false,
@@ -66,16 +104,10 @@ const smartifyContractABI = [
 				"type": "uint256"
 			},
 			{
-				"indexed": false,
-				"internalType": "uint8",
-				"name": "quantity",
-				"type": "uint8"
-			},
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "mintTo",
-				"type": "address"
+				"indexed": true,
+				"internalType": "string",
+				"name": "ipfsCID",
+				"type": "string"
 			},
 			{
 				"indexed": true,
@@ -84,10 +116,22 @@ const smartifyContractABI = [
 				"type": "address"
 			},
 			{
-				"indexed": true,
-				"internalType": "string",
-				"name": "ipfsCID",
-				"type": "string"
+				"indexed": false,
+				"internalType": "address",
+				"name": "mintTo",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint16",
+				"name": "editions",
+				"type": "uint16"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint16",
+				"name": "royaltyAmount",
+				"type": "uint16"
 			}
 		],
 		"name": "CreateToken",
@@ -98,18 +142,37 @@ const smartifyContractABI = [
 		"inputs": [
 			{
 				"indexed": true,
+				"internalType": "bool",
+				"name": "_toStatus",
+				"type": "bool"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "changedBy",
+				"type": "address"
+			}
+		],
+		"name": "SetAllowAdmin",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
 				"internalType": "string",
 				"name": "newName",
 				"type": "string"
 			},
 			{
-				"indexed": true,
+				"indexed": false,
 				"internalType": "string",
 				"name": "newSymbol",
 				"type": "string"
 			},
 			{
-				"indexed": true,
+				"indexed": false,
 				"internalType": "address",
 				"name": "changedBy",
 				"type": "address"
@@ -123,9 +186,59 @@ const smartifyContractABI = [
 		"inputs": [
 			{
 				"indexed": true,
+				"internalType": "uint256",
+				"name": "_tokenId",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "bytes32",
+				"name": "_part_1",
+				"type": "bytes32"
+			},
+			{
+				"indexed": false,
+				"internalType": "bytes32",
+				"name": "_part_2",
+				"type": "bytes32"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "_setBy",
+				"type": "address"
+			}
+		],
+		"name": "SetTokenUri",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
 				"internalType": "address",
 				"name": "toAddress",
 				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "changedBy",
+				"type": "address"
+			}
+		],
+		"name": "SetTreasury",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "bool",
+				"name": "_toStatus",
+				"type": "bool"
 			},
 			{
 				"indexed": true,
@@ -134,7 +247,26 @@ const smartifyContractABI = [
 				"type": "address"
 			}
 		],
-		"name": "SetTreasury",
+		"name": "SetUserAddsUser",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "bool",
+				"name": "_toStatus",
+				"type": "bool"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "changedBy",
+				"type": "address"
+			}
+		],
+		"name": "SetWhitelistWaiver",
 		"type": "event"
 	},
 	{
@@ -168,7 +300,7 @@ const smartifyContractABI = [
 			{
 				"indexed": true,
 				"internalType": "address",
-				"name": "newAdmin",
+				"name": "newUser",
 				"type": "address"
 			},
 			{
@@ -178,45 +310,7 @@ const smartifyContractABI = [
 				"type": "address"
 			}
 		],
-		"name": "adminAdded",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "removedAdmin",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "removedBy",
-				"type": "address"
-			}
-		],
-		"name": "adminRemoved",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "bool",
-				"name": "_toStatus",
-				"type": "bool"
-			},
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "changedBy",
-				"type": "address"
-			}
-		],
-		"name": "allowAdminStatusChange",
+		"name": "UserAddedByAdmin",
 		"type": "event"
 	},
 	{
@@ -235,7 +329,7 @@ const smartifyContractABI = [
 				"type": "address"
 			}
 		],
-		"name": "userAdded",
+		"name": "UserAddedByUser",
 		"type": "event"
 	},
 	{
@@ -254,26 +348,7 @@ const smartifyContractABI = [
 				"type": "address"
 			}
 		],
-		"name": "userRemoved",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "bool",
-				"name": "_toStatus",
-				"type": "bool"
-			},
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "changedBy",
-				"type": "address"
-			}
-		],
-		"name": "waiverStatusChange",
+		"name": "UserRemoved",
 		"type": "event"
 	},
 	{
@@ -297,7 +372,7 @@ const smartifyContractABI = [
 				"type": "address"
 			}
 		],
-		"name": "addUser",
+		"name": "adminAddUser",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -305,6 +380,19 @@ const smartifyContractABI = [
 	{
 		"inputs": [],
 		"name": "allowAdmin",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "allowSetUri",
 		"outputs": [
 			{
 				"internalType": "bool",
@@ -375,9 +463,9 @@ const smartifyContractABI = [
 	{
 		"inputs": [
 			{
-				"internalType": "uint8",
-				"name": "_quantity",
-				"type": "uint8"
+				"internalType": "uint16",
+				"name": "_editions",
+				"type": "uint16"
 			},
 			{
 				"internalType": "address",
@@ -433,6 +521,20 @@ const smartifyContractABI = [
 	},
 	{
 		"inputs": [],
+		"name": "hardcodeTokenUri",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "hardcodeTreasury",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
 		"name": "hardcodeUseIpfs",
 		"outputs": [],
 		"stateMutability": "nonpayable",
@@ -440,12 +542,12 @@ const smartifyContractABI = [
 	},
 	{
 		"inputs": [],
-		"name": "ipfsGatewayId",
+		"name": "ipfsGateway",
 		"outputs": [
 			{
-				"internalType": "uint8",
+				"internalType": "bytes32",
 				"name": "",
-				"type": "uint8"
+				"type": "bytes32"
 			}
 		],
 		"stateMutability": "view",
@@ -725,12 +827,12 @@ const smartifyContractABI = [
 	{
 		"inputs": [
 			{
-				"internalType": "uint8",
-				"name": "_ipfsGatewayId",
-				"type": "uint8"
+				"internalType": "bytes32",
+				"name": "_ipfsGateway",
+				"type": "bytes32"
 			}
 		],
-		"name": "setIpfsGatewayId",
+		"name": "setIpfsGateway",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -782,6 +884,29 @@ const smartifyContractABI = [
 	{
 		"inputs": [
 			{
+				"internalType": "uint256",
+				"name": "_tokenId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "_part_1",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "_part_2",
+				"type": "bytes32"
+			}
+		],
+		"name": "setTokenUri",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "address",
 				"name": "_addressToMakeTreasury",
 				"type": "address"
@@ -801,6 +926,19 @@ const smartifyContractABI = [
 			}
 		],
 		"name": "setUseIpfs",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bool",
+				"name": "_userAddsUser",
+				"type": "bool"
+			}
+		],
+		"name": "setUserAddsUser",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -914,6 +1052,19 @@ const smartifyContractABI = [
 	},
 	{
 		"inputs": [],
+		"name": "tokenUriHardcoded",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
 		"name": "totalSupply",
 		"outputs": [
 			{
@@ -963,6 +1114,19 @@ const smartifyContractABI = [
 	},
 	{
 		"inputs": [],
+		"name": "treasuryHardcoded",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
 		"name": "useIpfs",
 		"outputs": [
 			{
@@ -977,6 +1141,32 @@ const smartifyContractABI = [
 	{
 		"inputs": [],
 		"name": "useIpfsHardcoded",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_addressToWhitelist",
+				"type": "address"
+			}
+		],
+		"name": "userAddUser",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "userAddsUser",
 		"outputs": [
 			{
 				"internalType": "bool",

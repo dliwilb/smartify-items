@@ -3,3 +3,4 @@
 *.pem
 /ipfs-fs/
 node-tests.js
+/script/discard/
