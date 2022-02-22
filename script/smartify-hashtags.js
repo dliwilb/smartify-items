@@ -102,7 +102,7 @@ async function showHashtagged(hashtag) {
     </div>
     <div id="div-info-${i}" style="display: none">
         <div class="nft-description">${nftJSON.description}</div>
-        <div class="nft-hashtags">${nftJSON.hashtags.join(' ')}</div>
+        <div class="nft-hashtags">${nftJSON.hashtags.map(x => `<a class="hashtag" href="hashtags.html?h=${encodeURIComponent(x)}">${x}</a>`).join('&nbsp;&nbsp;')}</div>
         <span>${nftJSON.editions} edition(s)</span>
 `;
             
@@ -132,7 +132,7 @@ async function showHashtagged(hashtag) {
 `;
     isRepeating = false;
     
-    console.log(htmlToAdd);
+    // console.log(htmlToAdd);
     document.getElementById('div-items-hashtagged').innerHTML += htmlToAdd;
 
 

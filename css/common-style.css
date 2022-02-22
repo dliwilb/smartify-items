@@ -31,6 +31,14 @@
         text-decoration-style: dotted;
         text-decoration-color: #308f3d;
     }
+
+    a.hashtag {
+        color: #b0d1bc;
+        text-decoration: none;
+        /* text-decoration:underline; */
+        /* text-decoration-style: dotted; */
+        /* text-decoration-color: #308f3d; */
+    }
     
     a:hover {
         color: #cccccc;
