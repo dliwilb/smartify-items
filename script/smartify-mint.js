@@ -167,7 +167,7 @@ async function showPreview() {
 
     previewContent = 
 `
-<div class="preview-image"><img class="preview" src="${URL.createObjectURL(document.getElementById('file-to-smartify').files[0])}"></div>
+<div class="preview-image"><img class="preview" onclick="imgToFullscreen('${URL.createObjectURL(document.getElementById('file-to-smartify').files[0])}')" src="${URL.createObjectURL(document.getElementById('file-to-smartify').files[0])}"></div>
 
 
 [ Creator ]

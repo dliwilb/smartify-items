@@ -22,34 +22,24 @@
 
 
 <body>
+    <!-- Header >> -->
+    <h1 id="h1-title" style="display: none">Creators</h1>
+    <div id="div-menu-dropdown"></div>
+    <script src="script/menu-dropdown.js"></script>
+    <!-- << Header -->
 
+    <input name="creator-address" id="creator-address" type="text" placeholder="0x..." style="width: 430px" onchange="onShowCreated()">
 
-<!-- Header >> -->
-<h1 id="h1-title" style="display: none">Creators</h1>
-<div id="div-menu-dropdown"></div>
-<script src="script/menu-dropdown.js"></script>
-<!-- << Header -->
+    <div id="div-items-created" style="margin: 12px; text-align: center;"></div>
+    <div id="div-fullpage" onclick="this.style.display='none'"></div>
 
-
-<input name="creator-address" id="creator-address" type="text" placeholder="0x..." style="width: 430px" onchange="onShowCreated()">
-
-
-<div id="div-items-created" style="margin: 12px; text-align: center;"></div>
-
-
-<!-- Footer -->
-<!-- <hr> -->
-<br><br>
-
-<!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
-<script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"></script>
-<!-- <script src="https://cdn.jsdelivr.net/npm/keccak256@latest/keccak256.js"></script> -->
-<!-- <script src="script/connect-wallet-and-network.js"></script> -->
-<script src="script/contract-abi.js"></script>
-<script src="script/https-rpc.js"></script>
-<script src="script/common-tools.js"></script>
-<script src="script/smartify-creators.js"></script>
-
-
+    <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/keccak256@latest/keccak256.js"></script> -->
+    <!-- <script src="script/connect-wallet-and-network.js"></script> -->
+    <script src="script/contract-abi.js"></script>
+    <script src="script/https-rpc.js"></script>
+    <script src="script/common-tools.js"></script>
+    <script src="script/smartify-creators.js"></script>
 </body>
 </html>

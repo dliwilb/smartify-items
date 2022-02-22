@@ -77,7 +77,7 @@ async function showToken() {
         }
         document.getElementById('div-token-info').innerHTML +=
         `
-        <img class="nft-item-image" src="${nftJSON.image}">
+        <img class="nft-item-image" onclick="imgToFullscreen('${nftJSON.image}')" src="${nftJSON.image}">
         <p style="text-decoration: underline">ITMS #${tokenId}</p>
         <h3>${nftJSON.name}</h3>
         <div class="nft-description">${nftJSON.description}</div>

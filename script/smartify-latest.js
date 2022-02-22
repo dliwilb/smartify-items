@@ -66,7 +66,7 @@ async function showLatestItems(offsetHours) {
             document.getElementById('div-latest-items').innerHTML +=
 `
 <div class="nft-item">
-    <img class="preview" src="${nftJSON.image}">
+    <img class="preview" src="${nftJSON.image}" onclick="imgToFullscreen('${nftJSON.image}')">
     <div class="nft-token-info">
         <span style="display: inline-block; width: 600px">
             ITMS <a href="items.html?t=${tokenId}">#${tokenId}</a>&nbsp;&nbsp;<span class="highlight">${nftJSON.name}</span>&nbsp;&nbsp;by&nbsp;&nbsp;<a class="creator" href="creators.html?a=${createdBy}">${createdByShort}</a>

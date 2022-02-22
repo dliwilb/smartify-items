@@ -14,3 +14,9 @@ function displaySwitch(_elementId, _displayStyle){
     document.getElementById(_elementId).style.display = 
 		document.getElementById(_elementId).style.display == 'none' ? _displayStyle : 'none';
 }
+
+function imgToFullscreen(img) {
+	// console.log('full-screen');
+    document.getElementById('div-fullpage').style.backgroundImage = 'url(' + img + ')';
+    document.getElementById('div-fullpage').style.display = 'block';
+}
