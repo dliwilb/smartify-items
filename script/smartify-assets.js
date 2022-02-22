@@ -65,7 +65,7 @@ async function showItems() {
     <span class="imgbox">
         <img class="assets" onclick="imgToFullscreen('${nftJSON.image}')" src="${nftJSON.image}">
     </span>
-    <a href="transfer.html?nft_contract_address=&token_id=${arrayTokenId[i]}" title="Transfer">
+    <a href="transfer.html?t=${arrayTokenId[i]}" title="Transfer">
         <img class="transfer-sign" src="./image/transfer-icon-neg.png">
     </a>
 </span>`;
