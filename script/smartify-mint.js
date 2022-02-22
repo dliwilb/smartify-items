@@ -183,7 +183,7 @@ async function showPreview() {
 <div class="preview-fields">`;
 
     for (let i = 0; i < hashtags.length; i++){
-        if ( hashtags[i].match(/^\#\w+/) ) {
+        if ( hashtags[i].match(/^\#.+/) ) {
             previewContent += hashtags[i];
             previewContent += "\r\n";
         }
@@ -226,7 +226,7 @@ async function showPreview() {
 function parseHashtags(){
     const _inputHashtags = document.getElementById('nft-hashtags').value;
 
-    let _hashtags = _inputHashtags.split(',');
+    let _hashtags = _inputHashtags.split(/[\s,]+/);
     _hashtags = _hashtags.map(s => s.trim());
 
     // console.log(hashtags);
@@ -245,7 +245,7 @@ async function hashtagOnChain(){
 
     let j = 0;
     for (let i = 0; i < hashtags.length; i++){
-        if ( hashtags[i].match(/^\#\w+/) ) {
+        if ( hashtags[i].match(/^\#.+/) ) {
             threeHashtags[j] = hashtags[i];
             j++;
         }
@@ -348,7 +348,7 @@ async function pinJSONToIPFS(fileIpfsHash) {
     let hashtagsOnly = [];
 
     for (let i = 0; i < hashtags.length; i++){
-        if ( hashtags[i].match(/^\#\w+/) ) {
+        if ( hashtags[i].match(/^\#.+/) ) {
             hashtagsOnly.push(hashtags[i]);
         }
     }
