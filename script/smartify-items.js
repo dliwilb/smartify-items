@@ -1,9 +1,6 @@
 const provider = new ethers.providers.JsonRpcProvider(httpsRPC);
 const smartifyContract = new ethers.Contract(smartifyContractAddress, smartifyContractABI, provider);
 
-const ipfsGatewayReplacer = 'https://ipfs.io/ipfs/';
-
-
 
 
 const params = new Proxy(new URLSearchParams(window.location.search), {
@@ -46,24 +43,32 @@ async function showToken() {
 
         // event CreateToken(
         //     uint256 indexed tokenId, 
-        //     string indexed ipfsCID, 
+        //     string indexed hashedIpfsCID, 
         //     address indexed createdBy, 
-        //     address mintTo, 
         //     uint16 editions, 
-        //     uint16 royaltyAmount
+        //     string plainIpfsCID
+        // );
+    
+        // event TokenHashtags(
+        //     uint256 tokenId, 
+        //     bytes32 indexed hashtag_1, 
+        //     bytes32 indexed hashtag_2, 
+        //     bytes32 indexed hashtag_3
         // );
         const creator = events[0].args[2];
         const creatorShort = creator.substring(0, 6) + '...' + creator.substring(creator.length - 4);
 
-        const editions = events[0].args[4];
+        const editions = events[0].args[3];
         // const royalties = events[0].args[5] / 100;
 
-        let tokenURI = await smartifyContract.tokenURI(tokenId);
-        const foundIPFSinURI = tokenURI.match(/ipfs:\/\/(\w+)/);
-        // console.log(foundIPFSinURI);
-        if (foundIPFSinURI != null){
-            tokenURI = ipfsGatewayReplacer + foundIPFSinURI[1];
-        }
+        const tokenURI = ipfsGatewayReplacer + events[0].args[4];
+
+        // let tokenURI = await smartifyContract.tokenURI(tokenId);
+        // const foundIPFSinURI = tokenURI.match(/ipfs:\/\/(\w+)/);
+        // // console.log(foundIPFSinURI);
+        // if (foundIPFSinURI != null){
+        //     tokenURI = ipfsGatewayReplacer + foundIPFSinURI[1];
+        // }
 
         let nftJSON = await fetchJSON(tokenURI);
         const foundIPFSinJSONImage = nftJSON.image.match(/ipfs:\/\/(\w+)/);
@@ -76,11 +81,12 @@ async function showToken() {
         <p style="text-decoration: underline">ITMS #${tokenId}</p>
         <h3>${nftJSON.name}</h3>
         <div class="nft-description">${nftJSON.description}</div>
-        <div class="nft-description">${nftJSON.hashtags.join(' ')}</div>
+        <div class="nft-hashtags">${nftJSON.hashtags.join(' ')}</div>
         <br>
         <p>[ Owner ]&nbsp;&nbsp;&nbsp;<a class="creator" href="collector.html?a=${tokenOwner}">${tokenOwnerShort}</a></p>
         <p>[ Creator ]&nbsp;&nbsp;&nbsp;<a class="creator" href="collector.html?a=${creator}">${creatorShort}</a>
-        <p>${editions} edition(s)</p>     
+        <p>${editions} edition(s)</p>
+        <p><a href="${tokenURI}">metadata</a></p>
         `;
         // `<img class="nft-image" src="${nftJSON.image}">`;
         // console.log(nftJSON.description);

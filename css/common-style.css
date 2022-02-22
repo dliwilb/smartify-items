@@ -142,18 +142,65 @@
         /* cursor: pointer; */
     }
 
+    div.nft-item {
+        width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 40px;
+    }
+
+    div.nft-item + div.nft-item {
+        margin-top: 70px;
+    }
+
+    span.more-info {
+        color: #aaaaaa;
+        font-size: 9pt;
+        font-weight: 100;
+        text-decoration: none;
+        cursor: pointer;
+        /* letter-spacing: 1px; */
+        /* text-decoration: underline; */
+        /* text-decoration-style: dotted; */
+        /* text-decoration-color: #308f3d; */
+    }
+
+    div.preview-image {
+        margin-left: 30px; 
+        text-align: center;
+        display: inline-block;
+        width: 600px;
+    }
+
+    img.preview{
+        max-width: 500px; 
+        max-height: 600px;
+    }
+
+    div.preview-fields {
+        margin-left: 30px; 
+        display: inline-block;
+        width: 600px;
+    }
+
     img.nft-item-image {
         max-height: 450px;
         max-width: 450px;
     }
 
     div.nft-description {
+        width: 480px;
+        margin: 20px auto 10px;
+        text-align: justify;
+        white-space: pre-wrap;
+    }
+
+    div.nft-hashtags {
         width: 410px;
         margin: 20px auto 10px;
         text-align: left;
         white-space: pre-wrap;
-    }
-    
+    }   
 
     span.nftdisplay {
         display: inline-block;

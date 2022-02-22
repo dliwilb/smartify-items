@@ -9,3 +9,8 @@ async function fetchJSON(api_uri) {
 	
 	return await myJSON;
 }
+
+function displaySwitch(_elementId, _displayStyle){
+    document.getElementById(_elementId).style.display = 
+		document.getElementById(_elementId).style.display == 'none' ? _displayStyle : 'none';
+}

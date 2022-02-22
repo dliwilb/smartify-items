@@ -8,6 +8,7 @@ document.getElementById('div-menu-dropdown').innerHTML =
     <div id="myDropdown" class="dropdown-content">
         <a href="index.html">Home</a>
         <a href="mint.html">Mint</a>
+        <a href="hashtags.html">Hashtags</a>
         <a href="items.html">Items</a>
         <a href="assets.html">Manage Items</a>
         <a href="creators.html">Creators</a>

@@ -72,15 +72,19 @@
     <!-- << Input -->
 
     <!-- Preview >> -->
-    <div id="div-preview" class="highlight" style="white-space: pre; display: none"></div>
+    <div id="div-preview" class="highlight" style="white-space: pre-wrap; display: none"></div>
     <!-- << Preview -->
 
     <div style="margin-top: 60px; margin-bottom: 60px">
-        <h4>Minting cost: currently waived for early users, will be ~0.0001 BCH.</h4>
+        <h4>Minting cost: currently waived for early users, will then start at ~0.0001 BCH.</h4>
         <button id="button-preview" onclick="showPreview()" class="smartify">Preview &#xBB;</button>
         <button id="button-back" onclick="goBack()" class="smartify" style="display: none">&#x00AB; Back</button>
         <button id="button-smartify" onclick="smartify()" class="smartify" style="display: none">SMARTIFY (MINT)</button>
-        &nbsp;&nbsp;&nbsp;<span id="span-status"></span>
+        &nbsp;&nbsp;&nbsp;<span id="span-status"></span>&nbsp;&nbsp;&nbsp;
+        <br>
+        <button id="button-next-item" onclick="location.reload()" class="" style="display: none">&#x00AB; Mint New Item</button>
+        <span style="padding-left: 120px;">&nbsp;</span>
+        <button id="button-hashtag" onclick="hashtagOnChain()" class="" style="display: none">Optional: send first 3 hashtags on-chain</button>
     </div>
 
     

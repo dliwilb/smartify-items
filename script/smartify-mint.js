@@ -167,20 +167,20 @@ async function showPreview() {
 
     previewContent = 
 `
-<img src="${URL.createObjectURL(document.getElementById('file-to-smartify').files[0])}" style="max-width: 450px; max-height: 600px">
+<div class="preview-image"><img class="preview" src="${URL.createObjectURL(document.getElementById('file-to-smartify').files[0])}"></div>
 
 
 [ Creator ]
-<div style="margin-left: 30px; display: inline-block">${connected0xAccount}</div>
+<div class="preview-fields">${connected0xAccount}</div>
 
 [ Title ]
-<div style="margin-left: 30px; display: inline-block">${document.getElementById('nft-name').value}</div>
+<div class="preview-fields">${document.getElementById('nft-name').value}</div>
 
 [ Description ]
-<div style="margin-left: 30px; display: inline-block">${document.getElementById('nft-description').value}</div>
+<div class="preview-fields" style="text-align: justify">${document.getElementById('nft-description').value}</div>
 
 [ Hashtags ]
-<div style="margin-left: 30px; display: inline-block">`;
+<div class="preview-fields">`;
 
     for (let i = 0; i < hashtags.length; i++){
         if ( hashtags[i].match(/^\#\w+/) ) {
@@ -194,17 +194,17 @@ async function showPreview() {
 `
 
 [ Editions ]
-<div style="margin-left: 30px; display: inline-block">${document.getElementById('nft-editions').value}</div>
+<div class="preview-fields">${document.getElementById('nft-editions').value}</div>
 
 [ Royalties Suggeston ]
-<div style="margin-left: 30px; display: inline-block">${document.getElementById('nft-royalties').value} %</div>
+<div class="preview-fields">${document.getElementById('nft-royalties').value} %</div>
 
 [ Pinata API Keys ]
-<div style="margin-left: 30px; display: inline-block">${document.getElementById('api-key').value}</div>
-<div style="margin-left: 30px; display: inline-block">${document.getElementById('secret-api-key').value}</div>
+<div class="preview-fields">${document.getElementById('api-key').value}</div>
+<div class="preview-fields">${document.getElementById('secret-api-key').value}</div>
 
 [ NFT Recipient ]
-<div style="margin-left: 30px; display: inline-block">${mintTo}</div>
+<div class="preview-fields">${mintTo}</div>
 
 ` 
 
@@ -235,8 +235,45 @@ function parseHashtags(){
 
 
 
+async function hashtagOnChain(){
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+	const signer = provider.getSigner();
+    const smartifyContract = new ethers.Contract(smartifyContractAddress, smartifyContractABI, signer);
+
+    const hashtags = parseHashtags();
+    let threeHashtags = ['', '', ''];
+
+    let j = 0;
+    for (let i = 0; i < hashtags.length; i++){
+        if ( hashtags[i].match(/^\#\w+/) ) {
+            threeHashtags[j] = hashtags[i];
+            j++;
+        }
+    }
+
+    try {
+        const contractFunction = await smartifyContract.createTokenHashtags(
+            firstTokenId, 
+            hashtagToBytes32(threeHashtags[0]), 
+            hashtagToBytes32(threeHashtags[1]), 
+            hashtagToBytes32(threeHashtags[2]), 
+            );
+        const tx = await contractFunction.wait();
+        const event = tx.events[0];
+        console.log(event);
+
+        document.getElementById('span-status').innerHTML += ' Hashtagged on-chain.';
+        
+    } catch(e) {
+        alert(e);
+    }
+    
+}
+
+
 
 let isSmartifying = false;
+let firstTokenId = 0;
 
 async function smartify(){
 
@@ -263,7 +300,7 @@ async function smartify(){
 
     // 
 
-    document.getElementById('span-status').innerHTML = 'Minting NFT on smartBCH... <img src=".image/Spinner-1s-200px.png" style="max-height: 60px">';
+    document.getElementById('span-status').innerHTML = 'Minting NFT on smartBCH... <img src="./image/Spinner-1s-200px.png" style="max-height: 60px">';
 
 	const provider = new ethers.providers.Web3Provider(window.ethereum);
 	const signer = provider.getSigner();
@@ -271,21 +308,27 @@ async function smartify(){
 
     const mintFee = await smartifyContract.mintFee();
 
-    let contractFunction = await smartifyContract.createToken(
-        document.getElementById('nft-editions').value, 
-        mintTo, 
-        part_1, 
-        part_2, 
-        document.getElementById('nft-royalties').value * 100,
-        { value: BigInt(mintFee) * BigInt(document.getElementById('nft-editions').value) });
+    try {
+        const contractFunction = await smartifyContract.createToken(
+            document.getElementById('nft-editions').value, 
+            mintTo, 
+            part_1, 
+            part_2, 
+            document.getElementById('nft-royalties').value * 100,
+            { value: BigInt(mintFee) * BigInt(document.getElementById('nft-editions').value) });
 
-    let tx = await contractFunction.wait();
-    let event = tx.events[0];
-    console.log(event);
-    // let value = event.args[2];
-    // let tokenId = value.toNumber()
-
-    document.getElementById('span-status').innerHTML = 'NFT(s) minted on smartBCH.';
+            const tx = await contractFunction.wait();
+            const event = tx.events[0];
+            console.log(event);
+            firstTokenId = event.args[2].toNumber();
+        
+            document.getElementById('span-status').innerHTML = 'NFT(s) minted.';
+            document.getElementById('button-hashtag').style.display = 'inline';
+            document.getElementById('button-next-item').style.display = 'inline';
+    } catch(e) {
+        alert(e);
+        return 0;
+    }
 
     // 
 
@@ -352,6 +395,7 @@ async function pinJSONToIPFS(fileIpfsHash) {
         .catch(function (error) {
             //handle error here
             console.log(error);
+            alert(error);
         });
 
     return ipfsJsonCID;
@@ -389,6 +433,7 @@ async function pinFileToIPFS() {
         ipfsFileCID =  response.data.IpfsHash;
     }).catch(function (error) {
         console.log(error);
+        alert(error);
     });
 
     return ipfsFileCID;
@@ -420,6 +465,24 @@ async function pinFileToIPFS() {
 //     "0x516d627a676945556570416d7733564b5866584b77794b7832617971476d6a35",
 //     "0x414b653668753565487a4370704d000000000000000000000000000000000000"
 // ]
+
+
+
+// console.log(hashtagToBytes32('#noise'));
+// 0x236e6f6973650000000000000000000000000000000000000000000000000000
+
+// console.log(hashtagToBytes32(''));
+// 0x0000000000000000000000000000000000000000000000000000000000000000
+
+function hashtagToBytes32(_hashtag) {
+    _bytes32 = '0x' + ascii_to_hexa(_hashtag.substring(0, 32));
+
+    let zeros = '000000000000000000000000000000000000000000000000000000000000000000';     // '0' x 66
+    const zerosToPad = 66 - _bytes32.length;
+
+    return (_bytes32 + zeros.substring(0, zerosToPad));
+}
+
 
 function cidToBytes32(str) {
     str_1 = '0x' + ascii_to_hexa(str.substring(0, 32));
