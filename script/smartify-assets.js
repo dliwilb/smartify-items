@@ -51,9 +51,9 @@ async function showItems() {
             if (ownedCandidates[String(arrayTokenId[i])]["owned"] === true) {
 
                 ownedIndex++;
-                const nftURI = await smartifyContract.tokenURI(arrayTokenId[i]);
-                // console.log(nftURI);
-                const nftJSON = await fetchJSON(nftURI);
+                const tokenURI = await smartifyContract.tokenURI(arrayTokenId[i]);
+                // console.log(tokenURI);
+                const nftJSON = await fetchJSON(tokenURI);
                 // console.log(nftJSON);
                 // console.log(nftJSON.name);
                 // console.log(nftJSON.attributes[0]);

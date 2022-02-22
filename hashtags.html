@@ -29,16 +29,19 @@
     <!-- << Header -->
 
 
-    <!-- <div id="div-latest-status" style="color: #555555; text-align: right; vertical-align: top; margin-bottom: 20px;">
-        loading latest items...
-    </div> -->
+    <input name="input-hashtag" id="input-hashtag" type="text" placeholder="#hashtag" style="width: 320px" onchange="onShowHashtagged()">
 
+    <div id="div-items-hashtagged" style="margin: 12px; text-align: center;"></div>
+    <div id="div-fullpage" onclick="this.style.display='none'"></div>
 
-    <!-- Footer -->
-    <br><br>
-
-    <!-- <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"></script> -->
-
+    <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/keccak256@latest/keccak256.js"></script> -->
+    <!-- <script src="script/connect-wallet-and-network.js"></script> -->
+    <script src="script/contract-abi.js"></script>
+    <script src="script/https-rpc.js"></script>
+    <script src="script/common-tools.js"></script>
+    <script src="script/smartify-hashtags.js"></script>
 
 </body>
 </html>

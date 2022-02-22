@@ -20,3 +20,39 @@ function imgToFullscreen(img) {
     document.getElementById('div-fullpage').style.backgroundImage = 'url(' + img + ')';
     document.getElementById('div-fullpage').style.display = 'block';
 }
+
+// console.log(hashtagToBytes32('#noise'));
+// 0x236e6f6973650000000000000000000000000000000000000000000000000000
+
+// console.log(hashtagToBytes32(''));
+// 0x0000000000000000000000000000000000000000000000000000000000000000
+
+
+function cidToBytes32(str) {
+    str_1 = '0x' + ascii_to_hexa(str.substring(0, 32));
+    str_2 = '0x' + ascii_to_hexa(str.substring(32, 64));
+
+    let zeros = '000000000000000000000000000000000000000000000000000000000000000000';     // '0' x 66
+    const zerosToPad = 66 - str_2.length;
+
+    return[str_1, str_2 + zeros.substring(0, zerosToPad)];
+}
+
+
+function ascii_to_hexa(str) {
+    var arr1 = [];
+    for (var n = 0, l = str.length; n < l; n ++) {
+      var hex = Number(str.charCodeAt(n)).toString(16);
+      arr1.push(hex);
+    }
+    return arr1.join('');
+}
+
+function hashtagToBytes32(_hashtag) {
+    _bytes32 = '0x' + ascii_to_hexa(_hashtag.substring(0, 32));
+
+    let zeros = '000000000000000000000000000000000000000000000000000000000000000000';     // '0' x 66
+    const zerosToPad = 66 - _bytes32.length;
+
+    return (_bytes32 + zeros.substring(0, zerosToPad));
+}
