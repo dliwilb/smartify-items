@@ -21,12 +21,6 @@ function imgToFullscreen(img) {
     document.getElementById('div-fullpage').style.display = 'block';
 }
 
-// console.log(hashtagToBytes32('#noise'));
-// 0x236e6f6973650000000000000000000000000000000000000000000000000000
-
-// console.log(hashtagToBytes32(''));
-// 0x0000000000000000000000000000000000000000000000000000000000000000
-
 
 function cidToBytes32(str) {
     str_1 = '0x' + ascii_to_hexa(str.substring(0, 32));

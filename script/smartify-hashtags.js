@@ -13,15 +13,6 @@ if (params["h"] !== null){
 }
 
 async function showHashtagged(hashtag) {
-
-    // event CreateToken(
-    //     uint256 indexed tokenId, 
-    //     string indexed hashedIpfsCID, 
-    //     address indexed createdBy, 
-    //     uint16 editions, 
-    //     string plainIpfsCID
-    // );
-
     // event TokenHashtags(
     //     uint256 tokenId, 
     //     bytes32 indexed hashtag_1, 
@@ -29,13 +20,23 @@ async function showHashtagged(hashtag) {
     //     bytes32 indexed hashtag_3
     // );
 
-    const hashtagFilter = smartifyContract.filters.TokenHashtags(null, hashtagToBytes32(hashtag), null, null);
-    const hashtagEvents = await smartifyContract.queryFilter(hashtagFilter);
-    console.log(hashtagEvents);
+    const hashtagFilter_1 = smartifyContract.filters.TokenHashtags(null, hashtagToBytes32(hashtag), null, null);
+    const hashtagEvents_1 = await smartifyContract.queryFilter(hashtagFilter_1);
+    console.log(hashtagEvents_1);
+
+    const hashtagFilter_2 = smartifyContract.filters.TokenHashtags(null, null, hashtagToBytes32(hashtag), null);
+    const hashtagEvents_2 = await smartifyContract.queryFilter(hashtagFilter_2);
+    console.log(hashtagEvents_2);
+
+    const hashtagFilter_3 = smartifyContract.filters.TokenHashtags(null, null, null, hashtagToBytes32(hashtag));
+    const hashtagEvents_3 = await smartifyContract.queryFilter(hashtagFilter_3);
+    console.log(hashtagEvents_3);
+
+    const hashtagEvents = hashtagEvents_3.concat(hashtagEvents_2).concat(hashtagEvents_1);
     
     
     
-    return 0;
+    // return 0;
     // const createdByShort = createdBy.substring(0, 6) + '...' + createdBy.substring(createdBy.length - 4);
 
     let previousTokenURI = '';
@@ -44,27 +45,48 @@ async function showHashtagged(hashtag) {
     let htmlToAdd = '';
     let nftJSON;
     
-    for (let i = events.length-1; i >= 0; i--) {
-        const tokenId = events[i].args[0];
+    for (let i = hashtagEvents.length-1; i >= 0; i--) {
+        const tokenId = hashtagEvents[i].args[0];
+        // const tokenURI = await smartifyContract.tokenURI(tokenId);
 
-        // const tokenURI = await smartifyContract.tokenURI(arrayTokenId[i]);
-        // const nftJSON = await fetchJSON(tokenURI);
+        // event CreateToken(
+        //     uint256 indexed tokenId, 
+        //     string indexed hashedIpfsCID, 
+        //     address indexed createdBy, 
+        //     uint16 editions, 
+        //     string plainIpfsCID
+        // );
+        const tokenFilter = smartifyContract.filters.CreateToken(tokenId);
+        const tokenEvents = await smartifyContract.queryFilter(tokenFilter);
+        console.log(tokenEvents);
+
+        const creator = tokenEvents[0].args[2];
+        // const editions = tokenEvents[0].args[3];
+        const tokenURI = ipfsGatewayReplacer + tokenEvents[0].args[4];
+        console.log(tokenURI);
+
+        const creatorShort = creator.substring(0, 6) + '...' + creator.substring(creator.length - 4);
+
+        let previousTokenURI = '';
+        let isRepeating = false;
+    
+        let nftJSON;
 
         if (tokenURI !== previousTokenURI) {
             isRepeating = false;
 
-            if (i < events.length-1){
+            if (i < hashtagEvents.length-1){
                 htmlToAdd += '</div>';
             }
 
             previousTokenURI = tokenURI;
 
             nftJSON = await fetchJSON(tokenURI);
+            // const foundIPFSinJSONImage = nftJSON.image.match(/ipfs:\/\/(\w+)/);
+            // if (foundIPFSinJSONImage != null){
+            //     nftJSON.image = 'https://ipfs.io/ipfs/' + foundIPFSinJSONImage[1];
+            // }
 
-            const foundIPFSinJSONImage = nftJSON.image.match(/ipfs:\/\/(\w+)/);
-            if (foundIPFSinJSONImage != null){
-                nftJSON.image = 'https://ipfs.io/ipfs/' + foundIPFSinJSONImage[1];
-            }
 
             htmlToAdd += 
 `
@@ -72,7 +94,7 @@ async function showHashtagged(hashtag) {
     <img class="preview" src="${nftJSON.image}" onclick="imgToFullscreen('${nftJSON.image}')">
     <div class="nft-token-info">
         <span style="display: inline-block; width: 600px">
-            ITMS <a href="items.html?t=${tokenId}">#${tokenId}</a>&nbsp;&nbsp;<span class="highlight">${nftJSON.name}</span>&nbsp;&nbsp;by&nbsp;&nbsp;<a class="creator" href="creators.html?a=${createdBy}">${createdByShort}</a>
+            ITMS <a href="items.html?t=${tokenId}">#${tokenId}</a>&nbsp;&nbsp;<span class="highlight">${nftJSON.name}</span>&nbsp;&nbsp;by&nbsp;&nbsp;<a class="creator" href="creators.html?a=${creator}">${creatorShort}</a>
         </span>
         <div style="display: inline-block; width: 480px; text-align: right">
             <span class="more-info" href="#" onclick="displaySwitch('div-info-${i}', 'block')">more info &#x21e9;</span>
@@ -110,7 +132,8 @@ async function showHashtagged(hashtag) {
 `;
     isRepeating = false;
     
-    document.getElementById('div-items-created').innerHTML += htmlToAdd;
+    console.log(htmlToAdd);
+    document.getElementById('div-items-hashtagged').innerHTML += htmlToAdd;
 
 
 }
