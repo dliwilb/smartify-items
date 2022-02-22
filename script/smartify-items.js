@@ -83,8 +83,8 @@ async function showToken() {
         <div class="nft-description">${nftJSON.description}</div>
         <div class="nft-hashtags">${nftJSON.hashtags.map(x => `<a class="hashtag" href="hashtags.html?h=${encodeURIComponent(x)}">${x}</a>`).join('&nbsp;&nbsp;')}</div>
         <br>
-        <p>[ Owner ]&nbsp;&nbsp;&nbsp;<a class="creator" href="collector.html?a=${tokenOwner}">${tokenOwnerShort}</a></p>
-        <p>[ Creator ]&nbsp;&nbsp;&nbsp;<a class="creator" href="collector.html?a=${creator}">${creatorShort}</a>
+        <p>[ Owner ]&nbsp;&nbsp;&nbsp;<a class="creator" href="collectors.html?a=${tokenOwner}">${tokenOwnerShort}</a></p>
+        <p>[ Creator ]&nbsp;&nbsp;&nbsp;<a class="creator" href="creators.html?a=${creator}">${creatorShort}</a>
         <p>${editions} edition(s)</p>
         <p><a href="${tokenURI}">metadata</a></p>
         `;
