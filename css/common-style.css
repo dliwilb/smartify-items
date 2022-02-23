@@ -210,6 +210,7 @@
         width: 480px;
         margin: 20px auto 10px;
         text-align: left;
+        /* overflow-wrap: break-word; */
         white-space: pre-wrap;
     }   
 

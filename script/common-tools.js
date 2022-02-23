@@ -1,3 +1,5 @@
+const hashtagSpacing = '    ';
+
 async function fetchJSON(api_uri) {
 	let response = await fetch(api_uri);
 	

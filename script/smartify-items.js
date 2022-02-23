@@ -77,11 +77,11 @@ async function showToken() {
         }
         document.getElementById('div-token-info').innerHTML +=
         `
-        <img class="nft-item-image" onclick="imgToFullscreen('${nftJSON.image}')" src="${nftJSON.image}">
+        <img class="preview" onclick="imgToFullscreen('${nftJSON.image}')" src="${nftJSON.image}">
         <p style="text-decoration: underline">ITMS #${tokenId}</p>
         <h3>${nftJSON.name}</h3>
         <div class="nft-description">${nftJSON.description}</div>
-        <div class="nft-hashtags">${nftJSON.hashtags.map(x => `<a class="hashtag" href="hashtags.html?h=${encodeURIComponent(x)}">${x}</a>`).join('&nbsp;&nbsp;')}</div>
+        <div class="nft-hashtags">${nftJSON.hashtags.map(x => `<a class="hashtag" href="hashtags.html?h=${encodeURIComponent(x)}">${x}</a>`).join(hashtagSpacing)}</div>
         <br>
         <p>[ Owner ]&nbsp;&nbsp;&nbsp;<a class="creator" href="collectors.html?a=${tokenOwner}">${tokenOwnerShort}</a></p>
         <p>[ Creator ]&nbsp;&nbsp;&nbsp;<a class="creator" href="creators.html?a=${creator}">${creatorShort}</a>

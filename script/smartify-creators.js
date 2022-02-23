@@ -87,7 +87,7 @@ async function showCreated(createdBy) {
     </div>
     <div id="div-info-${i}" style="display: none">
         <div class="nft-description">${nftJSON.description}</div>
-        <div class="nft-hashtags">${nftJSON.hashtags.map(x => `<a class="hashtag" href="hashtags.html?h=${encodeURIComponent(x)}">${x}</a>`).join('&nbsp;&nbsp;')}</div>
+        <div class="nft-hashtags">${nftJSON.hashtags.map(x => `<a class="hashtag" href="hashtags.html?h=${encodeURIComponent(x)}">${x}</a>`).join(hashtagSpacing)}</div>
         <span>${nftJSON.editions} edition(s)</span>
 `;
             
