@@ -1,6 +1,6 @@
 
-const provider = new ethers.providers.JsonRpcProvider(httpsRPC);
-const smartifyContract = new ethers.Contract(smartifyContractAddress, smartifyContractABI, provider);
+const provider = new ethers.providers.JsonRpcProvider(HTTPS_RPC);
+const smartifyContract = new ethers.Contract(CONTRACT_ADDR, CONTRACT_ABI, provider);
 
 
 const minDisplayEntries = 30;
@@ -45,7 +45,7 @@ async function showLatestItems(offsetHours) {
         // );
 
         const tokenId = events[i].args[0];
-        const tokenURI = ipfsGatewayReplacer + events[i].args[4];
+        const tokenURI = IPFS_GATEWAY + events[i].args[4];
         const createdBy = events[i].args[2];
         
 

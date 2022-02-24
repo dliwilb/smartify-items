@@ -10,9 +10,9 @@ async function showItems() {
         // console.log(connected0xAccount);
 
         const provider = new ethers.providers.Web3Provider(window.ethereum);
-        // console.log(`log: contract address set to ${smartifyContractAddress}`);
+        // console.log(`log: contract address set to ${CONTRACT_ADDR}`);
 
-        const smartifyContract = new ethers.Contract(smartifyContractAddress, smartifyContractABI, provider);
+        const smartifyContract = new ethers.Contract(CONTRACT_ADDR, CONTRACT_ABI, provider);
 
         // connected0xAccount = '';
         const eventFilterReceived = smartifyContract.filters.Transfer(null, connected0xAccount, null);

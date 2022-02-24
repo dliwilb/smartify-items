@@ -1,6 +1,6 @@
-const smartifyContractAddress = '0x0236Af1CD70bE87dE143d44dcB37Ac2751Ed4ea9';
+const CONTRACT_ADDR = '0x0236Af1CD70bE87dE143d44dcB37Ac2751Ed4ea9';
 
-const smartifyContractABI = [
+const CONTRACT_ABI = [
 	{
 		"anonymous": false,
 		"inputs": [

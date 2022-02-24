@@ -22,8 +22,8 @@ async function getOwner0xAddress(){
 
     if ( tokenId != ''){
         await connectWallet();
-        const provider = new ethers.providers.JsonRpcProvider(httpsRPC);
-        const smartifyContract = new ethers.Contract(smartifyContractAddress, smartifyContractABI, provider);
+        const provider = new ethers.providers.JsonRpcProvider(HTTPS_RPC);
+        const smartifyContract = new ethers.Contract(CONTRACT_ADDR, CONTRACT_ABI, provider);
 
         const ownerOfNft = await smartifyContract.ownerOf(tokenId);
         document.getElementById('nft-owner').value = ownerOfNft;
@@ -84,7 +84,7 @@ async function confirmTransfer() {
     const signer = provider.getSigner();
     const tokenId = document.getElementById('nf-token-id').value;
 
-    const smartifyContract = new ethers.Contract(smartifyContractAddress, smartifyContractABI, signer);
+    const smartifyContract = new ethers.Contract(CONTRACT_ADDR, CONTRACT_ABI, signer);
 
     document.getElementById('button-confirm').innerHTML = 'Transferring...'
     const contractFunction = 

@@ -238,7 +238,7 @@ function parseHashtags(){
 async function hashtagOnChain(){
     const provider = new ethers.providers.Web3Provider(window.ethereum);
 	const signer = provider.getSigner();
-    const smartifyContract = new ethers.Contract(smartifyContractAddress, smartifyContractABI, signer);
+    const smartifyContract = new ethers.Contract(CONTRACT_ADDR, CONTRACT_ABI, signer);
 
     const hashtags = parseHashtags();
     let threeHashtags = ['', '', ''];
@@ -304,7 +304,7 @@ async function smartify(){
 
 	const provider = new ethers.providers.Web3Provider(window.ethereum);
 	const signer = provider.getSigner();
-    const smartifyContract = new ethers.Contract(smartifyContractAddress, smartifyContractABI, signer);
+    const smartifyContract = new ethers.Contract(CONTRACT_ADDR, CONTRACT_ABI, signer);
 
     const mintFee = await smartifyContract.mintFee();
 
