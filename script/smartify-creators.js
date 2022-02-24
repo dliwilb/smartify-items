@@ -45,7 +45,7 @@ async function showCreated(createdBy) {
 
     const createdByShort = createdBy.substring(0, 6) + '...' + createdBy.substring(createdBy.length - 4);
 
-    document.getElementById('div-items-created').innerHTML = 'ITMS&nbsp;&nbsp;made by&nbsp;&nbsp;' + createdByShort;
+    document.getElementById('div-items-created').innerHTML = 'ITMS&nbsp;&nbsp;created by&nbsp;&nbsp;' + createdByShort;
 
     let previousTokenURI = '';
     let isRepeating = false;

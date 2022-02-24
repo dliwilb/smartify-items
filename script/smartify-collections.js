@@ -81,7 +81,6 @@ async function showCollection(_creator, _hashtag) {
 
     let events;
 
-    let createdTokenIds = [];
     let creatorEvents = [];
     if ( _creator != '' ){
         [createdTokenIds, creatorEvents] = await getCreatorTokenIds(_creator);

@@ -1,4 +1,13 @@
-const CONTRACT_ADDR = '0x0236Af1CD70bE87dE143d44dcB37Ac2751Ed4ea9';
+let CONTRACT_ADDR;
+
+switch ( Number(DEPLOYED_NETWORK_ID) ){
+    case 0x4:       // Testnet Rinkeby
+		CONTRACT_ADDR = '0x0236Af1CD70bE87dE143d44dcB37Ac2751Ed4ea9'
+        break;
+    case 0x2710:    // smartBCH
+		CONTRACT_ADDR = '0x8912EE75259778AA70981B73307C8B1b6B4A9ee1'
+        break;
+}
 
 const CONTRACT_ABI = [
 	{

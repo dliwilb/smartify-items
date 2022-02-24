@@ -1,6 +1,11 @@
 document.getElementById('url-contract-address').href = NETWORK_SCANNER + CONTRACT_ADDR;
 document.getElementById('url-contract-address').innerHTML = CONTRACT_ADDR;
 
+if ( DEPLOYED_NETWORK_ID == '0x2710' ){
+    document.getElementById('url-oasis-address').href = 'https://oasis.cash/collection/' + CONTRACT_ADDR;
+    document.getElementById('h4-marketplace').style.display = 'block';
+}
+
 
 async function readContractStatVar(){
     console.log('Reading contract state variables...');
