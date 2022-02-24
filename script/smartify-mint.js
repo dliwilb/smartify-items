@@ -132,11 +132,11 @@ async function showPreview() {
     }
 
     await connectWallet();
-    await switchNetwork();
+    await connectNetwork();
 
     mintTo = document.getElementById('nft-recipient').value;
     if (mintTo == ''){
-        mintTo = connected0xAccount;
+        mintTo = _CONNECTED_ACC_;
     } else {
         if ( ! ethers.utils.isAddress(mintTo) ){
             alert('Please check recipient address.');
@@ -144,7 +144,7 @@ async function showPreview() {
         }
     }
 
-    if ( ! (isWalletConnected && isNetworkConnected) ) {
+    if ( ! (_IS_WALLET_CONNECTED_ && _IS_NETWORK_CONNECTED_) ) {
         // console.log('Please connect wallet to smartBCH network.');
         alert('Please connect wallet to the smartBCH network.');
         return 0;
@@ -171,7 +171,7 @@ async function showPreview() {
 
 
 [ Creator ]
-<div class="preview-fields">${connected0xAccount}</div>
+<div class="preview-fields">${_CONNECTED_ACC_}</div>
 
 [ Title ]
 <div class="preview-fields">${document.getElementById('nft-name').value}</div>
@@ -363,7 +363,7 @@ async function pinJSONToIPFS(fileIpfsHash) {
             "image": `https://ipfs.io/ipfs/${fileIpfsHash}`, 
             "platform": "Smartify", 
             "symbol": "ITMS", 
-            "creator": connected0xAccount, 
+            "creator": _CONNECTED_ACC_, 
             "ipfsuri": `ipfs://${fileIpfsHash}`, 
             "mimetype": mimeType, 
             "editions": document.getElementById('nft-editions').value, 

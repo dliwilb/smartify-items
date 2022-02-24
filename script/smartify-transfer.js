@@ -54,7 +54,7 @@ async function getOwner0xAddress(){
 </div>
 `;
 
-        if (ownerOfNft == ethers.utils.getAddress(connected0xAccount.toString())){
+        if (ownerOfNft == ethers.utils.getAddress(_CONNECTED_ACC_.toString())){
             document.getElementById('nft-owner').value += '    (You)';
 
             document.getElementById('div-nft-transfer').style.display = 'block';
@@ -89,7 +89,7 @@ async function confirmTransfer() {
     document.getElementById('button-confirm').innerHTML = 'Transferring...'
     const contractFunction = 
         await smartifyContract.transferFrom(
-            ethers.utils.getAddress(connected0xAccount.toString()), 
+            ethers.utils.getAddress(_CONNECTED_ACC_.toString()), 
             document.getElementById('recipient-address').value, 
             tokenId);
     const tx = await contractFunction.wait();
