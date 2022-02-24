@@ -78,5 +78,6 @@ switch ( Number(DEPLOYED_NETWORK_ID) ){
     case 0x2710:    // smartBCH
         HTTPS_RPC = SMARTBCH_RPC;
         NETWORK_SCANNER = SMARTBCH_SCANNER;
+		BLOCK_INTERVAL = SMARTBCH_BLOCK_INTERVAL;
         break;
 }

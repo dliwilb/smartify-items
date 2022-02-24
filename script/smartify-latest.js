@@ -13,9 +13,10 @@ showLatestItems(0);
 async function showLatestItems(offsetHours) {
 
     let blockNum = await provider.getBlockNumber();
-    blockNum = blockNum - (offsetHours * 60 * 60 / BLOCK_INTERVAL);
+    blockNum = blockNum - Math.floor((offsetHours * 60 * 60 / BLOCK_INTERVAL));
 
-    const queryPeriodBlock = queryPeriodHour * 60 * 60 / BLOCK_INTERVAL;
+    
+    const queryPeriodBlock = Math.floor(queryPeriodHour * 60 * 60 / BLOCK_INTERVAL);
     const fromBlock = blockNum - queryPeriodBlock;
     const toBlock = blockNum;
 
