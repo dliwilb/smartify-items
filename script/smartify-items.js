@@ -49,12 +49,22 @@ async function showToken() {
         //     string plainIpfsCID
         // );
     
+        /* Cannot filter non-indexed parameters... */
+        // const hashtagFilter = smartifyContract.filters.TokenHashtags(tokenId);
+        // const hashtagEvents = await smartifyContract.queryFilter(hashtagFilter);
+        // const onChainHashtags = (
+        //     hashtagEvents[0].args[1], 
+        //     hashtagEvents[0].args[2], 
+        //     hashtagEvents[0].args[3]
+        // );
+        // console.log(onChainHashtags);
         // event TokenHashtags(
         //     uint256 tokenId, 
         //     bytes32 indexed hashtag_1, 
         //     bytes32 indexed hashtag_2, 
         //     bytes32 indexed hashtag_3
         // );
+
         const creator = events[0].args[2];
         const creatorShort = creator.substring(0, 6) + '...' + creator.substring(creator.length - 4);
 
