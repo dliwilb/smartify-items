@@ -29,6 +29,9 @@
 
 	<input name="creator-address" id="creator-address" type="text" placeholder="Creator Address: 0x..." style="width: 430px" onchange="onShowCollection()">
     <input name="input-hashtag" id="input-hashtag" type="text" placeholder="#hashtag (on-chained only)" style="width: 320px" onchange="onShowCollection()">
+    <span style="padding-left: 4px">&nbsp;</span>
+    <button id="button-share-link" style="display: none" onclick="copyShareLink('collections')">Copy Share Link</button>
+    <!-- <span id="span-link-copied" style="padding-left: 20px"></span> -->
 
 	<div id="div-collector-info" style="line-height: 3"></div>
 	<div id="div-collection" style="margin: 12px; text-align: center;"></div>

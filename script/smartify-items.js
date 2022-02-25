@@ -25,13 +25,14 @@ async function selectRandom() {
 
 async function showToken() {
 
+    document.getElementById('button-share-link').style.display = 'none';
     console.log('Loading token info...');
 
     const totalSupply = await smartifyContract.totalSupply();
 
     const tokenId = Number(document.getElementById('input-token-id').value);
 
-    document.getElementById('div-token-info').innerHTML = '';
+    document.getElementById('div-token-info').innerHTML = 'Loading... ';
 
     if ( tokenId <= Number(totalSupply) ){
 
@@ -85,7 +86,7 @@ async function showToken() {
         if (foundIPFSinJSONImage != null){
             nftJSON.image = IPFS_GATEWAY + foundIPFSinJSONImage[1];
         }
-        document.getElementById('div-token-info').innerHTML +=
+        document.getElementById('div-token-info').innerHTML =
         `
         <img class="preview" onclick="imgToFullscreen('${nftJSON.image}')" src="${nftJSON.image}">
         <p style="text-decoration: underline">ITMS #${tokenId}</p>
@@ -101,6 +102,11 @@ async function showToken() {
         // `<img class="nft-image" src="${nftJSON.image}">`;
         // console.log(nftJSON.description);
 
+        document.getElementById('button-share-link').innerHTML = 'Copy Share Link';
+        document.getElementById('button-share-link').style.display = 'inline';
+
+    } else {
+        document.getElementById('div-token-info').innerHTML = 'Invalid Token ID';
     }
 
 

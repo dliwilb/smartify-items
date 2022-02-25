@@ -31,7 +31,8 @@
 
 	<input type="number" name="input-token-id" id="input-token-id" type="text" placeholder="ITMS #" style="width: 160px" min="1" onchange="showToken()">
 	<!-- <button type="button" onclick="selectRandom()">Select Random</button> -->
-
+    <span style="padding-left: 4px">&nbsp;</span>
+    <button id="button-share-link" style="display: none" onclick="copyShareLink('items')">Copy Share Link</button>
 
 	<div id="div-token-info" style="margin: 50px 10% 50px; text-align: center;"></div>
     <div id="div-fullpage" onclick="this.style.display='none'"></div>

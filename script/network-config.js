@@ -68,6 +68,7 @@ let HTTPS_RPC;
 let NETWORK_SCANNER;
 let BLOCK_INTERVAL;
 let TESTNET_MARKER;
+let BASE_URL;
 
 switch ( Number(DEPLOYED_NETWORK_ID) ){
     case 0x4:       // Testnet Rinkeby
@@ -75,11 +76,13 @@ switch ( Number(DEPLOYED_NETWORK_ID) ){
         NETWORK_SCANNER = RINKEBY_SCANNER;
         BLOCK_INTERVAL = RINKEBY_BLOCK_INTERVAL;
         TESTNET_MARKER = '&nbsp;&nbsp;&nbsp;&nbsp;* Testnet Rinkeby *';
+        BASE_URL = 'https://dliwilb.github.io/smartify-items/';
         break;
     case 0x2710:    // smartBCH
         HTTPS_RPC = SMARTBCH_RPC;
         NETWORK_SCANNER = SMARTBCH_SCANNER;
 		BLOCK_INTERVAL = SMARTBCH_BLOCK_INTERVAL;
         TESTNET_MARKER = '';
+        BASE_URL = 'https://smartify-items.github.io/';
         break;
 }

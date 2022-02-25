@@ -28,6 +28,10 @@
     <!-- << Header -->
 
     <input name="creator-address" id="creator-address" type="text" placeholder="Creator Address: 0x..." style="width: 430px" onchange="onShowCreated()">
+    <span style="padding-left: 4px">&nbsp;</span>
+    <button id="button-share-link" style="display: none" onclick="copyShareLink('creators')">Copy Share Link</button>
+    <span style="padding-left: 4px">&nbsp;</span>
+    <a id="a-check-collections" href="" style="display: none"></a>
 
     <div id="div-items-created" style="margin: 12px; text-align: center;"></div>
     <div id="div-fullpage" onclick="this.style.display='none'"></div>

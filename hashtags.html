@@ -29,7 +29,10 @@
 
 
     <input name="input-hashtag" id="input-hashtag" type="text" placeholder="#hashtag (queries only on-chain hashtags)" style="width: 360px" onchange="showHashtagged(decodeURI(this.value))">
+    <span style="padding-left: 4px">&nbsp;</span>
+    <button id="button-share-link" style="display: none" onclick="copyShareLink('hashtags')">Copy Share Link</button>
 
+    <div id="div-loading"></div>
     <div id="div-items-hashtagged" style="margin: 12px; text-align: center;"></div>
     <div id="div-fullpage" onclick="this.style.display='none'"></div>
 

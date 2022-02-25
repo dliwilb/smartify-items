@@ -12,6 +12,9 @@ if (params["a"] !== null){
 
 
 function onShowCreated() {
+    document.getElementById('button-share-link').style.display = 'none';
+    document.getElementById('a-check-collections').style.display = 'none';
+
     const creatorAddress = document.getElementById('creator-address').value;
     if ( ethers.utils.isAddress(creatorAddress) ){
         document.getElementById('div-items-created').innerHTML = 'Loading...';
@@ -119,5 +122,15 @@ async function showCreated(createdBy) {
     
     document.getElementById('div-items-created').innerHTML += htmlToAdd;
 
+    if ( document.getElementById('div-items-created').innerHTML == '' ){
+        document.getElementById('div-items-created').innerHTML = 'No items found.';
+    } else {
+        document.getElementById('button-share-link').innerHTML = 'Copy Share Link';
+        document.getElementById('button-share-link').style.display = 'inline';
+
+        document.getElementById('a-check-collections').href = `collections.html?a=${createdBy}`;
+        document.getElementById('a-check-collections').innerHTML = `check out Collections created by ${createdByShort}`;
+        document.getElementById('a-check-collections').style.display = 'inline';
+    }
 
 }

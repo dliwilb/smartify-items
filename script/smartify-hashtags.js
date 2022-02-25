@@ -13,6 +13,10 @@ if (params["h"] !== null){
 }
 
 async function showHashtagged(hashtag) {
+
+    document.getElementById('div-loading').innerHTML = 'Loading... ';
+    document.getElementById('button-share-link').style.display = 'none';
+
     // event TokenHashtags(
     //     uint256 tokenId, 
     //     bytes32 indexed hashtag_1, 
@@ -43,7 +47,7 @@ async function showHashtagged(hashtag) {
     let isRepeating = false;
 
     document.getElementById('div-items-hashtagged').innerHTML = '';
-    let htmlToAdd = '';
+    // let htmlToAdd = '';
     let nftJSON;
     
     for (let i = hashtagEvents.length-1; i >= 0; i--) {
@@ -77,7 +81,7 @@ async function showHashtagged(hashtag) {
             isRepeating = false;
 
             if (i < hashtagEvents.length-1){
-                htmlToAdd += '</div>';
+                document.getElementById('div-items-hashtagged').innerHTML += '</div>';
             }
 
             previousTokenURI = tokenURI;
@@ -89,7 +93,7 @@ async function showHashtagged(hashtag) {
             // }
 
 
-            htmlToAdd += 
+            document.getElementById('div-items-hashtagged').innerHTML += 
 `
 <div class="nft-item">
     <img class="preview" src="${nftJSON.image}" onclick="imgToFullscreen('${nftJSON.image}')">
@@ -110,12 +114,12 @@ async function showHashtagged(hashtag) {
 
         } else {
             if (isRepeating == true){
-                htmlToAdd += 
+                document.getElementById('div-items-hashtagged').innerHTML += 
 `
 <span class="nft-token-info"><a href="items.html?t=${tokenId}">#${tokenId}</a> </span>&nbsp;
 `;
             } else {
-                htmlToAdd += 
+                document.getElementById('div-items-hashtagged').innerHTML += 
 `
 <span class="nft-token-info">&nbsp;&nbsp;&nbsp;... also as&nbsp;&nbsp;&nbsp;<a href="items.html?t=${tokenId}">#${tokenId}</a> </span>&nbsp;
 `;
@@ -126,7 +130,7 @@ async function showHashtagged(hashtag) {
 
     }
 
-    htmlToAdd += 
+    document.getElementById('div-items-hashtagged').innerHTML += 
 `
     </div>
 </div>
@@ -134,7 +138,15 @@ async function showHashtagged(hashtag) {
     isRepeating = false;
     
     // console.log(htmlToAdd);
-    document.getElementById('div-items-hashtagged').innerHTML += htmlToAdd;
+    // document.getElementById('div-items-hashtagged').innerHTML += htmlToAdd;
 
+    document.getElementById('div-loading').innerHTML = '';
+
+    if ( document.getElementById('div-items-hashtagged').innerHTML == '' ){
+        document.getElementById('div-items-hashtagged').innerHTML = 'No items found.';
+    } else {
+        document.getElementById('button-share-link').innerHTML = 'Copy Share Link';
+        document.getElementById('button-share-link').style.display = 'inline';
+    }
 
 }

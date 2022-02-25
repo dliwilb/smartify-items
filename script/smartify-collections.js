@@ -63,6 +63,9 @@ function onShowCollection() {
     const creatorAddress = document.getElementById('creator-address').value;
     const collectionHashtag = document.getElementById('input-hashtag').value;
 
+    // document.getElementById('span-link-copied').innerHTML = '';
+    document.getElementById('button-share-link').style.display = 'none';
+
     if ( creatorAddress != ''){
         if ( ethers.utils.isAddress(creatorAddress) ){
             document.getElementById('div-collection').innerHTML = 'Loading...';
@@ -224,6 +227,9 @@ async function showCollection(_creator, _hashtag) {
 
     if ( document.getElementById('div-collection').innerHTML == '' ){
         document.getElementById('div-collection').innerHTML = 'No items found.';
+    } else {
+        document.getElementById('button-share-link').innerHTML = 'Copy Share Link';
+        document.getElementById('button-share-link').style.display = 'inline';
     }
 
 }

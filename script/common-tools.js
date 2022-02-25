@@ -16,6 +16,37 @@ function checkBounds(_elementId, _lowerBoundInclusive, _upperBoundInclusive){
     }
 }
 
+
+function copyShareLink(type) {
+    let creatorAddress;
+    let collectionHashtag;
+    let tokenId;
+    switch( type ) {
+        case 'collections': 
+            creatorAddress = document.getElementById('creator-address').value;
+            collectionHashtag = document.getElementById('input-hashtag').value;
+        
+            navigator.clipboard.writeText(window.location.origin + `/collections.html?a=${creatorAddress}&h=${encodeURIComponent(collectionHashtag)}`);
+            break;
+        case 'hashtags': 
+            collectionHashtag = document.getElementById('input-hashtag').value;
+            navigator.clipboard.writeText(window.location.origin + `/hashtags.html?h=${encodeURIComponent(collectionHashtag)}`);
+            break;
+        case 'creators':
+            creatorAddress = document.getElementById('creator-address').value;
+            navigator.clipboard.writeText(window.location.origin + `/creators.html?a=${creatorAddress}`);
+            break;
+        case 'items':
+            tokenId = document.getElementById('input-token-id').value;
+            navigator.clipboard.writeText(window.location.origin + `/items.html?t=${tokenId}`);
+            break;
+    }
+    
+    document.getElementById('button-share-link').innerHTML = 'Copied!';
+    // document.getElementById('span-link-copied').innerHTML = 'Share link copied to Clipboard.';
+}
+
+
 async function fetchJSON(api_uri) {
 	let response = await fetch(api_uri);
 	
