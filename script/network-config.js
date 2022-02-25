@@ -66,18 +66,20 @@ const SMARTBCH_BLOCK_INTERVAL = 5.5;   // 1 block every 5.5 seconds on average
 
 let HTTPS_RPC;
 let NETWORK_SCANNER;
-let TESTNET_MARKER;
 let BLOCK_INTERVAL;
+let TESTNET_MARKER;
 
 switch ( Number(DEPLOYED_NETWORK_ID) ){
     case 0x4:       // Testnet Rinkeby
         HTTPS_RPC = RINKEBY_RPC;
         NETWORK_SCANNER = RINKEBY_SCANNER;
         BLOCK_INTERVAL = RINKEBY_BLOCK_INTERVAL;
+        TESTNET_MARKER = '&nbsp;&nbsp;&nbsp;&nbsp;* Testnet Rinkeby *';
         break;
     case 0x2710:    // smartBCH
         HTTPS_RPC = SMARTBCH_RPC;
         NETWORK_SCANNER = SMARTBCH_SCANNER;
 		BLOCK_INTERVAL = SMARTBCH_BLOCK_INTERVAL;
+        TESTNET_MARKER = '';
         break;
 }
