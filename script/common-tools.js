@@ -21,6 +21,7 @@ function copyShareLink(type) {
     let creatorAddress;
     let collectionHashtag;
     let tokenId;
+    let collectorAddress;
     switch( type ) {
         case 'collections': 
             creatorAddress = document.getElementById('creator-address').value;
@@ -39,6 +40,10 @@ function copyShareLink(type) {
         case 'items':
             tokenId = document.getElementById('input-token-id').value;
             navigator.clipboard.writeText(window.location.origin + `/items.html?t=${tokenId}`);
+            break;
+        case 'collectors':
+            collectorAddress = document.getElementById('collector-address').value;
+            navigator.clipboard.writeText(window.location.origin + `/collectors.html?a=${collectorAddress}`);
             break;
     }
     
