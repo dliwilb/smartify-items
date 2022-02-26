@@ -43,20 +43,26 @@ async function onShowCollection() {
         }
 
         if ( collectionHashtag == '' ){
-            document.getElementById('div-query-status').innerHTML = 'Please enter a hashtag.';
-            isShowingCollection = false;
-            return 0;
+            document.getElementById('div-query-status').innerHTML = 'Please enter a hashtag, or select from the following: ';
+            // isShowingCollection = false;
+            // return 0;
+        } else {
+            document.getElementById('div-query-status').innerHTML = 'Loading...';
         }
 
         document.getElementById('creator-address').readOnly = true;
         document.getElementById('input-hashtag').readOnly = true;
-        document.getElementById('div-query-status').innerHTML = 'Loading...';
 
         await showCollection(creatorAddress, collectionHashtag);
 
         document.getElementById('creator-address').readOnly = false;
         document.getElementById('input-hashtag').readOnly = false;
-        document.getElementById('div-query-status').innerHTML = '';
+
+        if ( collectionHashtag == '' ){
+            ;
+        } else {
+            document.getElementById('div-query-status').innerHTML = '';
+        }
 
 
         isShowingCollection = false;
@@ -85,6 +91,7 @@ async function onShowCollection() {
 async function showCollection(_creator, _hashtag) {
 
     document.getElementById('button-share-link').style.display = 'none';
+    document.getElementById('div-collection-hashtags').innerHTML = '';
 
     let events;
 
@@ -109,6 +116,7 @@ async function showCollection(_creator, _hashtag) {
     let isRepeating = false;
 
     let nftJSON;
+    let creatorHashtags = [];
 
     let htmlToAdd = '';
 
@@ -158,6 +166,13 @@ async function showCollection(_creator, _hashtag) {
             previousTokenURI = tokenURI;
 
             nftJSON = await fetchJSON(tokenURI);
+
+            for (let i = 0; i < nftJSON.hashtags.length; i++) {
+                    if ( ! creatorHashtags.includes(nftJSON.hashtags[i]) ){
+                        document.getElementById('div-collection-hashtags').innerHTML += `<a class="hashtag" href="collections.html?a=${_creator}&h=${encodeURIComponent(nftJSON.hashtags[i])}">${nftJSON.hashtags[i]}</a>${hashtagSpacing}`;
+                        creatorHashtags.push(nftJSON.hashtags[i]);
+                    }
+            }
 
             const foundIPFSinJSONImage = nftJSON.image.match(/ipfs:\/\/(\w+)/);
             if (foundIPFSinJSONImage != null){
