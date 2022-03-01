@@ -2,7 +2,7 @@ let ARTIST_NAME_CONTRACT_ADDR;
 
 switch ( Number(DEPLOYED_NETWORK_ID) ){
     case 0x4:       // Testnet Rinkeby
-		ARTIST_NAME_CONTRACT_ADDR = '0x0197e448d300Ac81b29fE4f47e4E2A9d127E96F0'
+		ARTIST_NAME_CONTRACT_ADDR = '0x5CC096590A6e34A3Ff014A40bf8629a7BD3bF862'
         break;
     case 0x2710:    // smartBCH
 		// ARTIST_NAME_CONTRACT_ADDR = '0x8912EE75259778AA70981B73307C8B1b6B4A9ee1'
@@ -11,6 +11,11 @@ switch ( Number(DEPLOYED_NETWORK_ID) ){
 
 
 const ARTIST_NAME_CONTRACT_ABI = [
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
 	{
 		"anonymous": false,
 		"inputs": [
@@ -204,173 +209,6 @@ const ARTIST_NAME_CONTRACT_ABI = [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "_address",
-				"type": "address"
-			},
-			{
-				"internalType": "bytes32",
-				"name": "_artistName",
-				"type": "bytes32"
-			}
-		],
-		"name": "adminSetArtistName",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_addressFrom",
-				"type": "address"
-			}
-		],
-		"name": "claimArtistName",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "claimOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			}
-		],
-		"name": "collectContractBalanceToTreasury",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "hardcodeTreasury",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_nextOwner",
-				"type": "address"
-			}
-		],
-		"name": "nameNextOwner",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_addressTo",
-				"type": "address"
-			}
-		],
-		"name": "passArtistName",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_addressToRemoveFromAdmin",
-				"type": "address"
-			}
-		],
-		"name": "removeAdmin",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "bool",
-				"name": "_allowAdmin",
-				"type": "bool"
-			}
-		],
-		"name": "setAllowAdmin",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "bool",
-				"name": "_allowTransferArtistName",
-				"type": "bool"
-			}
-		],
-		"name": "setAllowPassArtistName",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "bool",
-				"name": "_allowSetArtistName",
-				"type": "bool"
-			}
-		],
-		"name": "setAllowSetArtistName",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "bytes32",
-				"name": "_artistNameTo",
-				"type": "bytes32"
-			}
-		],
-		"name": "setArtistName",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_addressToMakeTreasury",
-				"type": "address"
-			}
-		],
-		"name": "setTreasury",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
 				"name": "",
 				"type": "address"
 			}
@@ -384,6 +222,24 @@ const ARTIST_NAME_CONTRACT_ABI = [
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_address",
+				"type": "address"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "_artistName",
+				"type": "bytes32"
+			}
+		],
+		"name": "adminSetArtistName",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -472,6 +328,39 @@ const ARTIST_NAME_CONTRACT_ABI = [
 		"inputs": [
 			{
 				"internalType": "address",
+				"name": "_addressFrom",
+				"type": "address"
+			}
+		],
+		"name": "claimArtistName",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "claimOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "collectContractBalanceToTreasury",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
 				"name": "_address",
 				"type": "address"
 			}
@@ -485,6 +374,26 @@ const ARTIST_NAME_CONTRACT_ABI = [
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "hardcodeTreasury",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_nextOwner",
+				"type": "address"
+			}
+		],
+		"name": "nameNextOwner",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -514,6 +423,84 @@ const ARTIST_NAME_CONTRACT_ABI = [
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_addressTo",
+				"type": "address"
+			}
+		],
+		"name": "passArtistName",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_addressToRemoveFromAdmin",
+				"type": "address"
+			}
+		],
+		"name": "removeAdmin",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bool",
+				"name": "_allowAdmin",
+				"type": "bool"
+			}
+		],
+		"name": "setAllowAdmin",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bool",
+				"name": "_allowTransferArtistName",
+				"type": "bool"
+			}
+		],
+		"name": "setAllowPassArtistName",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bool",
+				"name": "_allowSetArtistName",
+				"type": "bool"
+			}
+		],
+		"name": "setAllowSetArtistName",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "_artistNameTo",
+				"type": "bytes32"
+			}
+		],
+		"name": "setArtistName",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"name": "setArtistNameFee",
 		"outputs": [
@@ -524,6 +511,19 @@ const ARTIST_NAME_CONTRACT_ABI = [
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_addressToMakeTreasury",
+				"type": "address"
+			}
+		],
+		"name": "setTreasury",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
