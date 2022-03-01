@@ -348,3 +348,27 @@ async function claimArtistName(){
     }
 
 }
+
+async function adminOverride(){
+    await connectWallet();
+    await connectNetwork();
+
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const artistNameContract = new ethers.Contract(ARTIST_NAME_CONTRACT_ADDR, ARTIST_NAME_CONTRACT_ABI, signer);
+
+    let addressToManage = document.getElementById('artist-name-address').value;
+    const artistNameToManage = ethers.utils.formatBytes32String(document.getElementById('input-artist-name').value);
+
+    if ( addressToManage == '' ){
+        addressToManage = '0x0000000000000000000000000000000000000000';
+    }
+
+    try {
+        await artistNameContract.adminSetArtistName(addressToManage, artistNameToManage);
+    } catch(e) {
+        alert(e);
+    }
+
+    
+}
