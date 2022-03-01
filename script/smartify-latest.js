@@ -102,8 +102,6 @@ async function showLatestItems(offsetHours) {
             }
         }
 
-        document.getElementById('div-latest-status').innerHTML = '...these are our latest items';
-
         if ( itemsShown == itemsShownPrev ){
             emptyQueryCount++;
         } else {
@@ -118,6 +116,8 @@ async function showLatestItems(offsetHours) {
             isShowing = false;
             await showLatestItems(offsetHoursTracker);
         }
+
+        document.getElementById('div-latest-status').innerHTML = '...these are our latest items';
 
         document.getElementById('button-show-more').style.display = 'inline';
 

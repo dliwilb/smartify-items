@@ -44,15 +44,15 @@ async function showHashtagged(hashtag) {
 
     document.getElementById('button-share-link').style.display = 'none';
 
-    const hashtagFilter_1 = smartifyContract.filters.TokenHashtags(null, hashtagToBytes32(hashtag), null, null);
+    const hashtagFilter_1 = smartifyContract.filters.TokenHashtags(null, ethers.utils.formatBytes32String(hashtag), null, null);
     const hashtagEvents_1 = await smartifyContract.queryFilter(hashtagFilter_1);
     console.log(hashtagEvents_1);
 
-    const hashtagFilter_2 = smartifyContract.filters.TokenHashtags(null, null, hashtagToBytes32(hashtag), null);
+    const hashtagFilter_2 = smartifyContract.filters.TokenHashtags(null, null, ethers.utils.formatBytes32String(hashtag), null);
     const hashtagEvents_2 = await smartifyContract.queryFilter(hashtagFilter_2);
     console.log(hashtagEvents_2);
 
-    const hashtagFilter_3 = smartifyContract.filters.TokenHashtags(null, null, null, hashtagToBytes32(hashtag));
+    const hashtagFilter_3 = smartifyContract.filters.TokenHashtags(null, null, null, ethers.utils.formatBytes32String(hashtag));
     const hashtagEvents_3 = await smartifyContract.queryFilter(hashtagFilter_3);
     console.log(hashtagEvents_3);
 

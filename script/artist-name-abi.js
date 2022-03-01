@@ -2,7 +2,7 @@ let ARTIST_NAME_CONTRACT_ADDR;
 
 switch ( Number(DEPLOYED_NETWORK_ID) ){
     case 0x4:       // Testnet Rinkeby
-		ARTIST_NAME_CONTRACT_ADDR = '0x5CC096590A6e34A3Ff014A40bf8629a7BD3bF862'
+		ARTIST_NAME_CONTRACT_ADDR = '0x8Cf0BDd8f84A9cDC42628905853c267D3591A47e'
         break;
     case 0x2710:    // smartBCH
 		// ARTIST_NAME_CONTRACT_ADDR = '0x8912EE75259778AA70981B73307C8B1b6B4A9ee1'
@@ -465,11 +465,11 @@ const ARTIST_NAME_CONTRACT_ABI = [
 		"inputs": [
 			{
 				"internalType": "bool",
-				"name": "_allowTransferArtistName",
+				"name": "_allowSetArtistName",
 				"type": "bool"
 			}
 		],
-		"name": "setAllowPassArtistName",
+		"name": "setAllowSetArtistName",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -478,11 +478,11 @@ const ARTIST_NAME_CONTRACT_ABI = [
 		"inputs": [
 			{
 				"internalType": "bool",
-				"name": "_allowSetArtistName",
+				"name": "_allowTransferArtistName",
 				"type": "bool"
 			}
 		],
-		"name": "setAllowSetArtistName",
+		"name": "setAllowTransferArtistName",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -524,6 +524,25 @@ const ARTIST_NAME_CONTRACT_ABI = [
 		"name": "setTreasury",
 		"outputs": [],
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_string",
+				"type": "string"
+			}
+		],
+		"name": "stringToBytes32",
+		"outputs": [
+			{
+				"internalType": "bytes32",
+				"name": "result",
+				"type": "bytes32"
+			}
+		],
+		"stateMutability": "pure",
 		"type": "function"
 	},
 	{

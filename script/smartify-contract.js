@@ -1,10 +1,14 @@
 document.getElementById('url-contract-address').href = NETWORK_SCANNER + CONTRACT_ADDR;
 document.getElementById('url-contract-address').innerHTML = CONTRACT_ADDR;
 
+document.getElementById('url-artist-address').href = NETWORK_SCANNER + ARTIST_NAME_CONTRACT_ADDR;
+document.getElementById('url-artist-address').innerHTML = ARTIST_NAME_CONTRACT_ADDR;
+
 if ( DEPLOYED_NETWORK_ID == '0x2710' ){
     document.getElementById('url-oasis-address').href = 'https://oasis.cash/collection/' + CONTRACT_ADDR;
     document.getElementById('h4-marketplace').style.display = 'block';
 }
+
 
 
 async function readContractStatVar(){
@@ -111,6 +115,9 @@ async function readUserAddedByUser() {
 
 async function adminAddUser() {
     if ( ethers.utils.isAddress(document.getElementById('address').value) ){
+        await connectWallet();
+        await connectNetwork();
+
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner();
         const smartifyContract = new ethers.Contract(CONTRACT_ADDR, CONTRACT_ABI, signer);
@@ -125,6 +132,9 @@ async function adminAddUser() {
 
 async function userAddUser() {
     if ( ethers.utils.isAddress(document.getElementById('address').value) ){
+        await connectWallet();
+        await connectNetwork();
+
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner();
         const smartifyContract = new ethers.Contract(CONTRACT_ADDR, CONTRACT_ABI, signer);
@@ -139,6 +149,9 @@ async function userAddUser() {
 
 async function addAdmin() {
     if ( ethers.utils.isAddress(document.getElementById('address').value) ){
+        await connectWallet();
+        await connectNetwork();
+
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner();
         const smartifyContract = new ethers.Contract(CONTRACT_ADDR, CONTRACT_ABI, signer);
@@ -218,4 +231,120 @@ async function royaltyInfo() {
     } catch (e) {
         alert(e);
     }
+}
+
+
+async function getArtistName() {
+    document.getElementById('artist-name-info').innerHTML = LOADING_MESSAGE;
+
+    await connectWallet();
+    await connectNetwork();
+
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const artistNameContract = new ethers.Contract(ARTIST_NAME_CONTRACT_ADDR, ARTIST_NAME_CONTRACT_ABI, provider);
+
+    const artistName = await artistNameContract.getArtistName(_CONNECTED_ACC_);
+    const artistNameStruct = await artistNameContract.artistNames(ethers.utils.formatBytes32String(artistName));
+    // const artistNameBytes32 = await artistNameContract.addressToArtist(_CONNECTED_ACC_);
+
+    if ( artistName != '' ){
+        document.getElementById('artist-name-info').innerHTML = 
+`Your address [ ${_CONNECTED_ACC_} ] is registered as [ ${artistName} ]
+Designated successor address is [ ${artistNameStruct.successor} ]
+`
+        ;
+        // document.getElementById('artist-name-info').innerHTML = _CONNECTED_ACC_ + ': ' + artistName + ' (Bytes32: ' + artistNameBytes32 + ')';
+    }
+}
+
+async function checkArtistName() {
+
+    const nameToCheck = document.getElementById('input-artist-name').value;
+    // const nameToCheck = new Blob([document.getElementById('input-artist-name').value]);
+    // const nameToCheck = new String(document.getElementById('input-artist-name').value, "UTF-8");
+    // console.log(nameToCheck);
+
+    if ( nameToCheck != '' ) {
+        document.getElementById('artist-name-info').innerHTML = LOADING_MESSAGE;
+
+        const provider = new ethers.providers.JsonRpcProvider(HTTPS_RPC);
+        const artistNameContract = new ethers.Contract(ARTIST_NAME_CONTRACT_ADDR, ARTIST_NAME_CONTRACT_ABI, provider);
+
+        const nameAvailable = ['Available', 'Already taken'];
+        try {
+            const artistNameStruct = await artistNameContract.artistNames(ethers.utils.formatBytes32String(nameToCheck));
+            document.getElementById('artist-name-info').innerHTML = nameAvailable[+artistNameStruct.registered];
+        } catch(e) {
+            alert(e);
+            document.getElementById('artist-name-info').innerHTML = '';
+        }
+    }
+
+}
+
+async function setArtistName() {
+    // document.getElementById('artist-name-info').innerHTML = LOADING_MESSAGE;
+
+    await connectWallet();
+    await connectNetwork();
+
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const artistNameContract = new ethers.Contract(ARTIST_NAME_CONTRACT_ADDR, ARTIST_NAME_CONTRACT_ABI, signer);
+
+    const nameToSet = document.getElementById('input-artist-name').value;
+    const setArtistNameFee = await artistNameContract.setArtistNameFee();
+    // console.log(setArtistNameFee);
+
+    try {
+        await artistNameContract.setArtistName(
+                    ethers.utils.formatBytes32String(nameToSet), 
+                    { value: BigInt(setArtistNameFee) }
+                );
+    } catch(e) {
+        alert(e);
+    }
+    
+}
+
+
+async function nameArtistNameSuccessor(){
+    await connectWallet();
+    await connectNetwork();
+
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const artistNameContract = new ethers.Contract(ARTIST_NAME_CONTRACT_ADDR, ARTIST_NAME_CONTRACT_ABI, signer);
+
+    const addressTo = document.getElementById('artist-name-address').value;
+
+    try {
+        await artistNameContract.passArtistName(addressTo);
+    } catch(e) {
+        alert(e);
+    }
+
+}
+
+async function claimArtistName(){
+    await connectWallet();
+    await connectNetwork();
+
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const artistNameContract = new ethers.Contract(ARTIST_NAME_CONTRACT_ADDR, ARTIST_NAME_CONTRACT_ABI, signer);
+
+    const addressFrom = document.getElementById('artist-name-address').value;
+
+    const transferArtistNameFee = await artistNameContract.transferArtistNameFee();
+
+    try {
+        await artistNameContract.claimArtistName(
+                    addressFrom,
+                    { value: BigInt(transferArtistNameFee) }
+                );
+    } catch(e) {
+        alert(e);
+    }
+
 }

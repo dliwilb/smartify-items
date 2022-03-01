@@ -28,9 +28,15 @@
     <!-- << Header -->
 
     <h4>
-        Contract Address: 
+        Smartify Items Contract Address: 
         <br>
         <a id="url-contract-address" href=""></a>
+    </h4>
+
+    <h4>
+        Artist Name Contract Address: 
+        <br>
+        <a id="url-artist-address" href=""></a>
     </h4>
 
     <h4 id="h4-marketplace" style="display: none">
@@ -39,40 +45,68 @@
         <a id="url-oasis-address" href="">Listing on Oasis</a>
     </h4>
 
-    <br>
+    <hr>
 
-    <button type="button" onclick="readContractStatVar()">Read Contract State Variables</button>
-    <ul id="list-contract-info"></ul>
-
-    <br>
-
-    <button type="button" onclick="readUserAddedByAdmin()">Query UserAddedByAdmin Events (last 24hr)</button>
-    <ul id="list-UserAddedByAdmin"></ul>
-
-    <br>
-
-    <!-- <button type="button" onclick="readUserAddedByUser()">Query UserAddedByUser Events (last 24hr)</button> -->
-    <ul id="list-UserAddedByUser"></ul>
-
-    <br>
-
-    <input name="address" id="address" type="text" placeholder="address to be checked/whitelisted" style="width: 486px">
-    <br>
-    <button type="button" onclick="verifyUser()">verifyUser</button>
-    <button type="button" onclick="verifyAdmin()">verifyAdmin</button>
-    <button type="button" onclick="adminAddUser()">adminAddUser</button>
-    <!-- <button type="button" onclick="userAddUser()">userAddUser</button> -->
-    <button type="button" onclick="addAdmin()">addAdmin</button>
-    <div id="div-address-info"></div>
+    <h3 class="highlight">Smartify Artist Names</h3>
+    <div>
+        <button type="button" onclick="getArtistName()">Connect Wallet and Check Your Artist Name and Designated Successor</button>
+        <br>
+        <input name="input-artist-name" id="input-artist-name" type="text" placeholder="artist name: max 32 bytes ~ 10 個中文字" style="width: 330px">
+        <button type="button" onclick="checkArtistName()">Check Artist Name Availability</button>
+        <button type="button" onclick="setArtistName()">Connect Wallet and Set Artist Name</button>
+        <br>
+        <input name="artist-name-address" id="artist-name-address" type="text" placeholder="address to transfer to / claim from" style="width: 486px">
+        <button type="button" onclick="nameArtistNameSuccessor()">Name Artist Name Successor</button>
+        <button type="button" onclick="claimArtistName()">Claim Artist Name</button>
+        <br>
+        <div id="artist-name-info" class="highlight" style="white-space: pre-wrap"></div>
+    </div>
 
     <br>
+    <hr>
 
-    <input type="number" min="1" name="token-id" id="token-id" type="text" placeholder="Token ID" style="width: 100px">
+    <h3 class="highlight">Smartify Contract Status</h3>
+    <div>
+        <button type="button" onclick="readContractStatVar()">Read Smartify Items Contract State Variables</button>
+        <ul id="list-contract-info"></ul>
+    </div>
+
     <br>
-    <button type="button" onclick="tokenURI()">tokenURI</button>
-    <button type="button" onclick="ownerOf()">ownerOf</button>
-    <button type="button" onclick="royaltyInfo()">royaltyInfo</button>
-    <div id="div-token-info"></div>
+    <hr>
+
+    <h3 class="highlight">Access Control</h3>
+    <div>
+        <button type="button" onclick="readUserAddedByAdmin()">Query UserAddedByAdmin Events (last 24hr)</button>
+        <ul id="list-UserAddedByAdmin"></ul>
+
+
+        <!-- <button type="button" onclick="readUserAddedByUser()">Query UserAddedByUser Events (last 24hr)</button> -->
+        <ul id="list-UserAddedByUser"></ul>
+
+        <br>
+
+        <input name="address" id="address" type="text" placeholder="address to be checked/whitelisted" style="width: 486px">
+        <br>
+        <button type="button" onclick="verifyUser()">verifyUser</button>
+        <button type="button" onclick="verifyAdmin()">verifyAdmin</button>
+        <button type="button" onclick="adminAddUser()">adminAddUser</button>
+        <!-- <button type="button" onclick="userAddUser()">userAddUser</button> -->
+        <button type="button" onclick="addAdmin()">addAdmin</button>
+        <div id="div-address-info"></div>
+    </div>
+
+    <br>
+    <hr>
+
+    <h3 class="highlight">Token Information</h3>
+    <div>
+        <input type="number" min="1" name="token-id" id="token-id" type="text" placeholder="Token ID" style="width: 100px">
+        <br>
+        <button type="button" onclick="tokenURI()">tokenURI</button>
+        <button type="button" onclick="ownerOf()">ownerOf</button>
+        <button type="button" onclick="royaltyInfo()">royaltyInfo</button>
+        <div id="div-token-info"></div>
+    </div>
     <br>
 
 
@@ -83,6 +117,8 @@
     <script src="script/menu-dropdown.js"></script>
     <script src="script/connect-wallet-and-network.js"></script>
     <script src="script/contract-abi.js"></script>
+    <script src="script/artist-name-abi.js"></script>
+    <!-- <script src="script/common-tools.js"></script> -->
     <script src="script/smartify-contract.js"></script>
 
 
