@@ -123,7 +123,7 @@ async function showCollectedByEvents(_collectorAddress, _creator) {
             if ( document.getElementById('div-collected-creators').innerHTML == '' ) {
                 document.getElementById('div-collected-creators').innerHTML += 'From Creator(s):    ';
             }
-            document.getElementById('div-collected-creators').innerHTML += `<a class="hashtag" href="collectors.html?a=${_collectorAddress}&b=${nftJSON.creator}">${shortAddr(nftJSON.creator)}</a>${hashtagSpacing}`;
+            document.getElementById('div-collected-creators').innerHTML += `<a class="hashtag" href="collectors.html?a=${_collectorAddress}&b=${nftJSON.creator}">${await shortAddr(nftJSON.creator)}</a>${hashtagSpacing}`;
             collectedCreators.push(nftJSON.creator);
         }
 

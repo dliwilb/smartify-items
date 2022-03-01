@@ -31,8 +31,8 @@ async function getOwner0xAddress(){
         const tokenURI = await smartifyContract.tokenURI(tokenId);
         const nftJSON = await fetchJSON(tokenURI);
 
-        const creator = nftJSON.creator;
-        const creatorShort = creator.substring(0, 6) + '...' + creator.substring(creator.length - 4);
+        // const creator = nftJSON.creator;
+        // const creatorShort = creator.substring(0, 6) + '...' + creator.substring(creator.length - 4);
 
         document.getElementById('div-nft-info').innerHTML = 
 `
@@ -40,7 +40,7 @@ async function getOwner0xAddress(){
     <img class="preview" src="${nftJSON.image}" onclick="imgToFullscreen('${nftJSON.image}')">
     <div class="nft-token-info">
         <span style="display: inline-block; width: 600px">
-            ITMS <a href="items.html?t=${tokenId}">#${tokenId}</a>&nbsp;&nbsp;<span class="highlight">${nftJSON.name}</span>&nbsp;&nbsp;by&nbsp;&nbsp;<a class="creator" href="creators.html?a=${creator}">${creatorShort}</a>
+            ITMS <a href="items.html?t=${tokenId}">#${tokenId}</a>&nbsp;&nbsp;<span class="highlight">${nftJSON.name}</span>&nbsp;&nbsp;by&nbsp;&nbsp;<a class="creator" href="creators.html?a=${nftJSON.creator}">${await shortAddr(nftJSON.creator)}</a>
         </span>
         <div style="display: inline-block; width: 480px; text-align: right">
             <span class="more-info" href="#" onclick="displaySwitch('div-info-transfer', 'block')">more info &#x21e9;</span>

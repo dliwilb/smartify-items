@@ -2,7 +2,7 @@ document.getElementById('div-latest-status').innerHTML = document.getElementById
 
 const provider = new ethers.providers.JsonRpcProvider(HTTPS_RPC);
 const smartifyContract = new ethers.Contract(CONTRACT_ADDR, CONTRACT_ABI, provider);
-
+const artistNameContract = new ethers.Contract(ARTIST_NAME_CONTRACT_ADDR, ARTIST_NAME_CONTRACT_ABI, provider);
 
 const minDisplayEntries = 30;
 const queryPeriodHour = 48;
@@ -69,7 +69,13 @@ async function showLatestItems(offsetHours) {
 
                 // console.log(nftJSON.hashtags);
 
-                const createdByShort = createdBy.substring(0, 6) + '...' + createdBy.substring(createdBy.length - 4);
+                // const artistName = await artistNameContract.getArtistName(createdBy);
+                // let createdByShort;
+                // if ( artistName != '' ){
+                //     createdByShort = artistName + ' (' + createdBy.substring(0, 6) + '...' + createdBy.substring(createdBy.length - 4) + ')';
+                // } else {
+                //     createdByShort = createdBy.substring(0, 6) + '...' + createdBy.substring(createdBy.length - 4);
+                // }
 
                 document.getElementById('div-latest-items').innerHTML +=
 `
@@ -77,7 +83,7 @@ async function showLatestItems(offsetHours) {
     <img class="preview" src="${nftJSON.image}" onclick="imgToFullscreen('${nftJSON.image}')">
     <div class="nft-token-info">
         <span style="display: inline-block; width: 600px">
-            ITMS <a href="items.html?t=${tokenId}">#${tokenId}</a>&nbsp;&nbsp;<span class="highlight">${nftJSON.name}</span>&nbsp;&nbsp;by&nbsp;&nbsp;<a class="creator" href="creators.html?a=${createdBy}">${createdByShort}</a>
+            ITMS <a href="items.html?t=${tokenId}">#${tokenId}</a>&nbsp;&nbsp;<span class="highlight">${nftJSON.name}</span>&nbsp;&nbsp;by&nbsp;&nbsp;<a class="creator" href="creators.html?a=${createdBy}">${await shortAddr(createdBy)}</a>
         </span>
         <div style="display: inline-block; width: 480px; text-align: right">
             <span class="more-info" href="#" onclick="displaySwitch('div-info-${i}', 'block')">more info &#x21e9;</span>

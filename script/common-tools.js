@@ -17,8 +17,19 @@ function checkBounds(_elementId, _lowerBoundInclusive, _upperBoundInclusive){
 }
 
 
-function shortAddr(_address){
-    const addressShort_ = _address.substring(0, 6) + '...' + _address.substring(_address.length - 4);
+async function shortAddr(_address){
+    const provider = new ethers.providers.JsonRpcProvider(HTTPS_RPC);
+    const artistNameContract = new ethers.Contract(ARTIST_NAME_CONTRACT_ADDR, ARTIST_NAME_CONTRACT_ABI, provider);
+    const artistName = await artistNameContract.getArtistName(_address);
+
+    let addressShort_;
+    if ( artistName != '' ){
+        addressShort_ = artistName + ' (' + _address.substring(0, 6) + '...' + _address.substring(_address.length - 4) + ')';
+    } else {
+        addressShort_ = _address.substring(0, 6) + '...' + _address.substring(_address.length - 4);
+    }
+
+    // const addressShort_ = _address.substring(0, 6) + '...' + _address.substring(_address.length - 4);
     return addressShort_;
 }
 

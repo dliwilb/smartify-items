@@ -240,7 +240,7 @@ async function showCollection(_creator, _hashtag) {
                 nftJSON.image = 'https://ipfs.io/ipfs/' + foundIPFSinJSONImage[1];
             }
 
-            const creatorShort = nftJSON.creator.substring(0, 6) + '...' + nftJSON.creator.substring(nftJSON.creator.length - 4);
+            // const creatorShort = nftJSON.creator.substring(0, 6) + '...' + nftJSON.creator.substring(nftJSON.creator.length - 4);
 
             htmlToAdd += 
 `
@@ -253,7 +253,7 @@ async function showCollection(_creator, _hashtag) {
     </div>
     <div>
         <span style="display: inline-block; width: 600px">
-            ITMS <a href="items.html?t=${tokenId}">#${tokenId}</a>&nbsp;&nbsp;<span class="highlight">${nftJSON.name}</span>&nbsp;&nbsp;by&nbsp;&nbsp;<a class="creator" href="creators.html?a=${nftJSON.creator}">${creatorShort}</a>
+            ITMS <a href="items.html?t=${tokenId}">#${tokenId}</a>&nbsp;&nbsp;<span class="highlight">${nftJSON.name}</span>&nbsp;&nbsp;by&nbsp;&nbsp;<a class="creator" href="creators.html?a=${nftJSON.creator}">${await shortAddr(nftJSON.creator)}</a>
         </span>
         <div style="display: inline-block; width: 480px; text-align: right">
             <span class="more-info" href="#" onclick="displaySwitch('div-info-${i}', 'block')">more info &#x21e9;</span>

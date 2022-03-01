@@ -1,5 +1,6 @@
 const provider = new ethers.providers.JsonRpcProvider(HTTPS_RPC);
 const smartifyContract = new ethers.Contract(CONTRACT_ADDR, CONTRACT_ABI, provider);
+const artistNameContract = new ethers.Contract(ARTIST_NAME_CONTRACT_ADDR, ARTIST_NAME_CONTRACT_ABI, provider);
 
 const params = new Proxy(new URLSearchParams(window.location.search), {
 	get: (searchParams, prop) => searchParams.get(prop),
@@ -44,7 +45,13 @@ async function showCreated(createdBy) {
     const eventFilter = smartifyContract.filters.CreateToken(null, null, createdBy);
     const events = await smartifyContract.queryFilter(eventFilter);
 
-    const createdByShort = createdBy.substring(0, 6) + '...' + createdBy.substring(createdBy.length - 4);
+    const artistName = await artistNameContract.getArtistName(createdBy);
+    let createdByShort;
+    if ( artistName != '' ){
+        createdByShort = artistName + ' (' + createdBy.substring(0, 6) + '...' + createdBy.substring(createdBy.length - 4) + ')';
+    } else {
+        createdByShort = createdBy.substring(0, 6) + '...' + createdBy.substring(createdBy.length - 4);
+    }
 
     // document.getElementById('div-items-created').innerHTML = 'ITMS&nbsp;&nbsp;created by&nbsp;&nbsp;' + createdByShort;
 

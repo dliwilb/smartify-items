@@ -37,7 +37,7 @@ async function showToken() {
     if ( tokenId <= Number(totalSupply) ){
 
         const tokenOwner = await smartifyContract.ownerOf(tokenId);
-        const tokenOwnerShort = tokenOwner.substring(0, 6) + '...' + tokenOwner.substring(tokenOwner.length - 4);
+        // const tokenOwnerShort = tokenOwner.substring(0, 6) + '...' + tokenOwner.substring(tokenOwner.length - 4);
         const eventFilter = smartifyContract.filters.CreateToken(tokenId);
         const events = await smartifyContract.queryFilter(eventFilter);
         // console.log(events);
@@ -67,7 +67,7 @@ async function showToken() {
         // );
 
         const creator = events[0].args[2];
-        const creatorShort = creator.substring(0, 6) + '...' + creator.substring(creator.length - 4);
+        // const creatorShort = creator.substring(0, 6) + '...' + creator.substring(creator.length - 4);
 
         const editions = events[0].args[3];
         // const royalties = events[0].args[5] / 100;
@@ -101,8 +101,8 @@ async function showToken() {
         <div class="nft-description">${nftJSON.description}</div>
         <div class="nft-hashtags">${nftJSON.hashtags.map(x => `<a class="hashtag" href="hashtags.html?h=${encodeURIComponent(x)}">${x}</a>`).join(hashtagSpacing)}</div>
         <br>
-        <p>[ Owner ]&nbsp;&nbsp;&nbsp;<a class="creator" href="collectors.html?a=${tokenOwner}">${tokenOwnerShort}</a></p>
-        <p>[ Creator ]&nbsp;&nbsp;&nbsp;<a class="creator" href="creators.html?a=${creator}">${creatorShort}</a>
+        <p>[ Owner ]&nbsp;&nbsp;&nbsp;<a class="creator" href="collectors.html?a=${tokenOwner}">${await shortAddr(tokenOwner)}</a></p>
+        <p>[ Creator ]&nbsp;&nbsp;&nbsp;<a class="creator" href="creators.html?a=${creator}">${await shortAddr(creator)}</a>
         <p>${editions} edition(s)</p>
         <p><a href="${tokenURI}">metadata</a></p>
         `;
